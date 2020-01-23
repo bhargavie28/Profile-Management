@@ -26,17 +26,14 @@
   padding: 30px 78px 15px 77px;
   text-align: left;
   box-sizing: inherit;
-  font-weight: bold;  
-  color:#03bb85;
+  font-family: "'Roboto', 'Helvetica', 'Arial', sans-serif";
+  
 }
-​
-.color {
-  color:#03bb85;
-}
+
+
 #submit{
   color :white;
-  background-color: #03bb85;
-  border-color: #03bb85 ;
+
   position: absolute;
 
 }
@@ -55,8 +52,12 @@
 .input{
   display: flex;
   padding: 4px 10px;
-  width:  60%;
 }
+.tab_container_heading {
+  float: left;
+  color:  #1E7ECF !important
+}
+
 
 .navbar {
   display: flex;
@@ -66,8 +67,12 @@
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
+  border-bottom: solid 1px ;
   opacity: 0.9;
+}
+.color {
+  background-color: #1976d2;
+  color: white;
 }
 
 @keyframes App-logo-spin {

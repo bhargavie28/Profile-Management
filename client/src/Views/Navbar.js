@@ -7,8 +7,8 @@ import Nav from 'react-bootstrap/Nav';
 class Navbar1 extends Component {
     render() {
         return(
-            <Fragment>
-            <Navbar bg="dark" variant="dark">
+            <Fragment >
+            <Navbar className= "color" >
             <Navbar.Brand > <i className='fas fa-user' /> Profile Management</Navbar.Brand>
             <Nav className="mr-auto">
               <Nav.Link href="/createProfile">Create Profile</Nav.Link>

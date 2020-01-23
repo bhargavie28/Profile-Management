@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Form1 from './Components/Form';
-import Navbar from './Components/Navbar';
-import Dashboard from './Components/Dashboard';
-import ProfileList from './Components/ProfileList';
+import Form1 from './Views/Form';
+import Navbar from './Views/Navbar';
+import Dashboard from './Views/Dashboard';
+import ProfileList from './Views/ProfileList';
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
     <Navbar /> 
    {/* <Form1 /> */}
     <Dashboard /> 
+    
    {/* <ProfileList /> */}
     </div>
   );
