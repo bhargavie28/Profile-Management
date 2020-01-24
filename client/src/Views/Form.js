@@ -240,10 +240,15 @@ class Form1 extends Component {
         </div>
         </div>
         </Form>
-        <div className = "wrapper">
+        <div >
           <Button className="btn-primary" type="submit" id="submit">
-            Submit
+            Save
           </Button>
+          <div>
+          <Button className="btn-primary" type="submit" id="Reset">
+            Reset
+          </Button>
+          </div>
           </div>
          </div>
          </div>
