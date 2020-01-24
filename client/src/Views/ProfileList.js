@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import ProfileTableRow from './ProfileTableRow';
+import AddIcon from '../Components/Grid/AddIcon';
+import { Container } from "@material-ui/core";
 
 class ProfileList extends Component 
 {
@@ -31,21 +33,38 @@ class ProfileList extends Component
       }
 
       render() {
-        return (<div className="table-wrapper">
+        return (
+         
+        <div className= "table">
+        <AddIcon />
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>Candidate Name</th>
+                <th>ID</th>
+                <th>Applicant Name</th>
+                <th>Job Title</th>
+                <th>Applicant Status</th>
+                <th>Mobile Number</th>
                 <th>Email</th>
-                <th>Client Name</th>
-                <th>Current Location</th>
+                <th>Work Authorization</th>
+                <th>Source</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Ownership</th>
+                <th>Created By</th>
+                <th>Created On</th>
+                <th>Assigned To</th>
+
+
               </tr>
             </thead>
             <tbody>
               {this.DataTable()}
             </tbody>
           </Table>
-        </div>);
+        </div>
+     
+       );
       }
     }
 

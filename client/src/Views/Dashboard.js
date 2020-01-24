@@ -3,6 +3,7 @@ import { Route, Switch, Link, Redirect, BrowserRouter as Router } from 'react-ro
 import ReactDOM from 'react-dom';
 import Form1 from './Form';
 import ProfileList from './ProfileList';
+import SideBar from '../Components/Grid/SideBar';
 
 
 class Dashboard extends Component {
@@ -13,9 +14,10 @@ class Dashboard extends Component {
         <Fragment>
           <section className="container">
             <Switch>
-              <Route exact path='/' component={Form1} />
+              <Route exact path='/' component={ProfileList} />
               <Route exact path='/createProfile' component={Form1} />
               <Route exact path ='/viewProfiles' component = {ProfileList} />
+              
             </Switch>
           </section>
         </Fragment>

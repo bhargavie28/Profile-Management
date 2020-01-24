@@ -42,13 +42,13 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
   drawerPaper: {
     width: drawerWidth,
+  }
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
   },
 }));
 
@@ -66,30 +66,25 @@ function SideBar(props) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List>
+      <List> 
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemIcon>
+           {index.text}  {  <MailIcon />, <InboxIcon />}
+           
+            </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
     </div>
   );
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      {/* <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -100,11 +95,9 @@ function SideBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
-          </Typography>
+         
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
@@ -136,11 +129,10 @@ function SideBar(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
+     
         <div className={classes.toolbar} />
        
        <Form1 />
-      </main>
     </div>
   );
 }

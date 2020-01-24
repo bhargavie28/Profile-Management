@@ -9,13 +9,14 @@ import SideBar from './Components/Grid/SideBar'
 function App() {
   return (
     <div >
-<SideBar/>
-    <Navbar /> 
+       <Navbar />
+{/* <Form1 /> */}
+    {/* <Navbar />  */}
 
    {/* <Form1 /> */}
-    <Dashboard /> 
+    {/* <Dashboard />  */}
     
-   {/* <ProfileList /> */}
+    <ProfileList />
     </div>
   );
 }
