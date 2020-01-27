@@ -5,19 +5,20 @@ import Navbar from './Views/Navbar';
 import Dashboard from './Views/Dashboard';
 import ProfileList from './Views/ProfileList';
 import SideBar from './Components/Grid/SideBar'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 function App() {
   return (
-    <div >
-       <Navbar />
-{/* <Form1 /> */}
-    {/* <Navbar />  */}
+<div>
+  <Navbar />
+<Router>
+<Switch>
+  <Route path= "/form" component= {Form1} />
+  <Route path= "/profilelist" component= {ProfileList} />
+  </Switch>
+</Router>
+</div>
 
-   {/* <Form1 /> */}
-    {/* <Dashboard />  */}
-    
-    <ProfileList />
-    </div>
   );
 }
 

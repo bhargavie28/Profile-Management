@@ -1,34 +1,67 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-  candidatename: {
+  name: {
     type: String,
     required: true
   },
+  
   email: {
     type: String,
-    required: true,
-    unique: true
   },
-  clientname: {
-    type: String,
+  workphonenumber: {
+    type: Number,
+    required: true
   },
-  currentlocation: {
+  homephonenumber: {
+    type: Number,
+    required: true
+  },
+  workpermit: {
+    type: Number,
+    
+  },
+  dob: {
     type: String,
   },
   preferredlocation: {
-    type: String,
-  },
-  billing: {
     type: Number,
   },
-  skillset: {
+  address: {
     type: String,
   },
-  yearsofexperience: {
-    type: Number,
+  role: {
+    type: String,
   },
-  proficiency: {
+  employer: {
+    type: String,
+  },
+  linkedinurl: {
+    type: String,
+  },
+  skypeid: {
+    type: String,
+  },
+  status: {
+    type: String,
+  },
+  relocation: {
+    type: String,
+  },
+  taxterms: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+
+  source: {
+    type: String,
+  },
+  resume: {
+    type: String,
+  },
+  currentlocation: {
     type: String,
   }
 

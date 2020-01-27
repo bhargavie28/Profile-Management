@@ -42,18 +42,10 @@ class ProfileList extends Component
               <tr>
                 <th>ID</th>
                 <th>Applicant Name</th>
-                <th>Job Title</th>
-                <th>Applicant Status</th>
                 <th>Mobile Number</th>
                 <th>Email</th>
                 <th>Work Authorization</th>
-                <th>Source</th>
                 <th>City</th>
-                <th>State</th>
-                <th>Ownership</th>
-                <th>Created By</th>
-                <th>Created On</th>
-                <th>Assigned To</th>
 
 
               </tr>

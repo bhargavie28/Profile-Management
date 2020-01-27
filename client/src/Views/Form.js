@@ -21,8 +21,7 @@ import UploadImage from "./UploadImage";
 class Form1 extends Component {
   constructor(props) {
     super(props);
-    this.onChangeFirstName = this.onChangeFirstName.bind(this);
-    this.onChangeLastName = this.onChangeLastName.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeWorkPhoneNumber = this.onChangeWorkPhoneNumber.bind(this);
     this.onChangeHomePhoneNumber = this.onChangeHomePhoneNumber.bind(this);
@@ -47,8 +46,8 @@ class Form1 extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      firstname: "",
-      lastname: "",
+      name: "",
+     
       email: "",
       workphonenumber: "",
       homephonenumber: "",
@@ -71,12 +70,10 @@ class Form1 extends Component {
   }
 
   
-  onChangeFirstName(e) {
-    this.setState({ lastname: e.target.value });
+  onChangeName(e) {
+    this.setState({ name: e.target.value });
   }
-  onChangeLastName(e) {
-    this.setState({ firstname: e.target.value });
-  }
+ 
   onChangeEmail(e) {
     this.setState({ email: e.target.value });
   }
@@ -135,12 +132,12 @@ class Form1 extends Component {
     alert("User Saved");
     e.preventDefault();
     const profileObject = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
+      name: this.state.name,
+    
       workphonenumber: this.state.workphonenumber,
       homephonenumber: this.state.homephonenumber,
       email: this.state.email,
-      workpermit: this.state.workphonenumber,
+      workpermit: this.state.workpermit,
       dob: this.state.dob,
       preferredlocation: this.state.preferredlocation,
       currentlocation: this.state.currentlocation,
@@ -164,8 +161,7 @@ class Form1 extends Component {
 
     
     this.setState({
-      firstname: "",
-      lastname: "",
+      name: "",
       email: "",
       workphonenumber: "",
       homephonenumber: "",
@@ -227,39 +223,31 @@ class Form1 extends Component {
                 <Form>
                   <div class="row">
                     <div className="col-sm-6">
-                      <Form.Group controlId="candidatename">
-                        <Form.Label>First Name</Form.Label>
+                      <Form.Group controlId="firstname">
+                        <Form.Label>Applicant Name</Form.Label>
                         <Form.Control
-                          placeholder="First Name As Per Passport"
+                          placeholder="Full Name As Per Passport"
                           type="text"
-                          value={this.state.candidatename}
-                          onChange={this.onChangeCandidateName}
+                          value={this.state.name}
+                          onChange={this.onChangeName}
                           className="form-control form-control-sm"
                         />
                       </Form.Group>
-                      <Form.Group>
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control
-                          placeholder="Last Name As Per Passport"
-                          type="text"
-                          value={this.state.candidatename}
-                          onChange={this.onChangeCandidateName}
-                          className="form-control form-control-sm"
-                        />
-                      </Form.Group>
+                    
+                  
                       <Form.Group controlId="worknumber" className="textField">
                         <Form.Label>Work Phone number</Form.Label>
                         <Form.Control
-                          value={this.state.candidatename}
-                          onChange={this.onChangeCandidateName}
+                          value={this.state.workphonenumber}
+                          onChange={this.onChangeWorkPhoneNumber}
                           className="form-control form-control-sm"
                         />
                       </Form.Group>
                       <Form.Group controlId="homenumber">
                         <Form.Label>Home Phone Number</Form.Label>
                         <Form.Control
-                          value={this.state.candidatename}
-                          onChange={this.onChangeCandidateName}
+                          value={this.state.homephonenumber}
+                          onChange={this.onChangeHomePhoneNumber}
                           className="form-control form-control-sm"
                         />
                       </Form.Group>
@@ -278,6 +266,10 @@ class Form1 extends Component {
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
+                          value={this.state.workpermit}
+                          onSelect={this.onChangeWorkPermit}
+
+
                         >
                           <option></option>
                           <option>H1</option>
@@ -291,6 +283,7 @@ class Form1 extends Component {
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
+
                         >
                           <option>Choose...</option>
                           <option>Hyderabad</option>
@@ -399,7 +392,7 @@ class Form1 extends Component {
                   </div>
                 </Form>
                 <div>
-                  <Button className="btn-primary" type="submit" id="submit">
+                  <Button className="btn-primary" type="submit" id="submit" onClick = {this.onSubmit}>
                     Save
                   </Button>
                   <div>

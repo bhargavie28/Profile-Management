@@ -7,15 +7,33 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import '../../App.css'
 import Form1 from '../../Views/Form';
+import {NavLink} from 'react-router-dom';
 
-
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
 
 export default function FloatingActionButtons() {
+  const classes = useStyles();
+
 
   return (
-    <div className= "addIcon">
+    <div className= {classes.root}>
       <Fab color="primary" aria-label="add">
-        <AddIcon onClick ={<Form1 />} />
+        
+  <NavLink to = "/form"><AddIcon /></NavLink>
+
+       
+      </Fab>
+      <Fab color="secondary" aria-label="edit">
+        <EditIcon />
       </Fab>
      
     </div>

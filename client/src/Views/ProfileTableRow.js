@@ -6,10 +6,14 @@ import Button from 'react-bootstrap/Button';
     render() {
         return (
             <tr>
-                <td>{this.props.obj.candidatename}</td>
+                 <td>1.</td>
+                <td>{this.props.obj.name}</td>
+               
+                <td>{this.props.obj.homephonenumber}</td>
                 <td>{this.props.obj.email}</td>
-                <td>{this.props.obj.clientname}</td>
-                <td>{this.props.obj.currentlocation}</td>
+                <td>{this.props.obj.workpermit}</td>
+                <td>{this.props.obj.dob}</td>
+                <td>{this.props.obj.preferredlocation}</td>
 
             </tr>
         );

@@ -27,7 +27,7 @@ router.get('/', async (req,res)=>{
 router.post(
   '/',
   [
-    check('candidatename', 'Name is required')
+    check('name', 'Name is required')
       .not()
       .isEmpty(),
     check('email', 'Please include a valid email').isEmail()
@@ -39,7 +39,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { candidatename, email, clientname, currentlocation,preferredlocation, billing, skillset,yearsofexperience, proficiency } = req.body;
+    const { name, email, workphonenumber, homephonenumber,workpermit, dob, preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume,currentlocation } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -51,15 +51,25 @@ router.post(
       }
 
       user = new User({
-        candidatename,
-        email,
-        clientname,
-        currentlocation,
-        preferredlocation,
-        billing,
-        skillset,
-        yearsofexperience,
-        proficiency
+      name,
+      email,
+      workphonenumber,
+      homephonenumber,
+      workpermit,
+      dob,
+      preferredlocation,
+      address,
+      role,
+      employer,
+      linkedinurl,
+      skypeid,
+      status,
+      relocation,
+      taxterms,
+      gender,
+      source,
+      resume,
+      currentlocation
       });
 
       res.json({ user});
