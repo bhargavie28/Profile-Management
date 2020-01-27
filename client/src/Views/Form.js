@@ -1,23 +1,20 @@
 import React, { Component, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import Grid from "@material-ui/core/Grid";
-import GridItem from "../Components/Grid/GridItem";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 
 
+
 import axios from "axios";
 import "../App.css";
-import UploadImage from "./UploadImage";
+import { Divider } from "@material-ui/core";
 class Form1 extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +37,7 @@ class Form1 extends Component {
     this.onChangeSource = this.onChangeSource.bind(this);
     this.onChangeResume = this.onChangeResume.bind(this);
     this.onChangeCurrentLocation = this.onChangeCurrentLocation.bind(this);
+    this.onClickHandler = this.onClickHandler.bind(this);
 
 
 
@@ -123,11 +121,22 @@ class Form1 extends Component {
     this.setState({ source: e.target.value });
   }
   onChangeResume(e) {
-    this.setState({ resume: e.target.value });
+    this.setState({ resume:  e.target.files[0],
+      loaded: 0,
+    });
   }
   onChangeCurrentLocation(e) {
     this.setState({ currentlocation: e.target.value });
   }
+  onClickHandler = () => {
+    const data = new FormData() 
+    data.append('file', this.state.selectedFile)
+    axios.post("http://localhost:5000/api/upload", data, { 
+  })
+  .then(res => { 
+    console.log(res.statusText)
+ })
+}
   onSubmit(e) {
     alert("User Saved");
     e.preventDefault();
@@ -165,7 +174,7 @@ class Form1 extends Component {
       email: "",
       workphonenumber: "",
       homephonenumber: "",
-      workpermit: "",
+      workpermit: [],
       dob: "",
       preferredlocation: "",
       address: "",
@@ -199,11 +208,9 @@ class Form1 extends Component {
     return (
       
       <Container>
-        <Card>
         <Fragment>
-          <Card>
           <h3 className="color">Personal Details</h3>
-          </Card>
+          <Divider />
           {/* <Navbar >
             <Navbar.Brand > Personal Details</Navbar.Brand>
             <Nav className = "tab_container_heading" >
@@ -225,12 +232,14 @@ class Form1 extends Component {
                     <div className="col-sm-6">
                       <Form.Group controlId="firstname">
                         <Form.Label>Applicant Name</Form.Label>
+                        
                         <Form.Control
                           placeholder="Full Name As Per Passport"
                           type="text"
                           value={this.state.name}
                           onChange={this.onChangeName}
                           className="form-control form-control-sm"
+                         
                         />
                       </Form.Group>
                     
@@ -317,13 +326,14 @@ class Form1 extends Component {
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
-                    </div>
-                    <div className="col-sm-6">
                       <Form.Group controlId="formGridState">
                         <Form.Label>Address</Form.Label>
                         <Form.Control className="form-control form-control-sm"></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                     
+                    </div>
+                    <div className="col-sm-6">
+                    <Form.Group controlId="formGridState">
                         <Form.Label>Role</Form.Label>
                         <Form.Control className="form-control form-control-sm"></Form.Control>
                       </Form.Group>
@@ -380,12 +390,16 @@ class Form1 extends Component {
                       <Form.Group controlId="formGridUpload">
                         <Form.Label>Upload Resume</Form.Label>
                         <div className="file-upload">
+                        <Button onClick= {this.onClickHandler}>Upload</Button>
                           <input
                             type="file"
                             id="input-file-now-custom-2"
                             className="file-upload"
                             data-height="500"
+                            onChange={this.onChangeResume}
+                           
                           />
+                         
                         </div>
                       </Form.Group>
                     </div>
@@ -405,7 +419,6 @@ class Form1 extends Component {
             </div>
           </div>
         </Container>
-        </Card>
       </Container>
       
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import ImageUploader from 'react-images-upload';
-import { Avatar } from '@material-ui/core';
 
 
 class UploadImage extends React.Component {
