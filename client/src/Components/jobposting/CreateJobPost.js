@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class CreateJobPost extends Component {
-    
-    
-
+   
    render() {
        return (
-          <p>New Job post</p>
+       <div>
+          <p>Create New Job</p>
+       </div>        
        ) 
    }
 }
 
-export default CreateJobPost
+export default CreateJobPost;

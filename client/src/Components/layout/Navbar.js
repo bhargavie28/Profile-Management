@@ -1,27 +1,31 @@
-import React , {Component, Fragment} from 'react';
+import React , {Component} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import { Button } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
-import '../../App.css';
-import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
-
+import SignedInLinks from '../layout/SignedInLinks';
 
 class Navbar1 extends Component {
     render() {
         return(
-            <Fragment >
-            <h1 className= "navbar">  <AccountCircleSharpIcon /></h1>
-             <Nav className="mr-auto">
-          
-            </Nav>
-            <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            </Form> 
-          <br />
-          </Fragment>
-        
+          <Navbar collapseOnSelect className="color-nav" expand="lg" variant="dark">
+          <Navbar.Brand href="/">
+          <img
+        alt=""
+        src="/assets/jss/images/icon.png"
+        width="30"
+        height="30"
+        className="d-inline-block align-top"
+      />{' '}ProjectManagement</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+          <SignedInLinks/>
+          </Nav>
+          {/* <Form inline>
+          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+          <Button variant="outline-secondary">Search</Button>
+    </Form> */}
+          </Navbar.Collapse>
+            </Navbar>        
     
       );
     }

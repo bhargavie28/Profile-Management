@@ -1,13 +1,14 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import Nav from 'react-bootstrap/Nav';
+
 
 const SignedInLinks =() =>{
     return(
-     <ul className="right">
-         <li> <NavLink to='/jobpostlist'></NavLink></li>
-         <li> <NavLink to='/profilelist'></NavLink></li>
-         <li> <NavLink to='/'>B</NavLink></li>
-     </ul>
+        <Nav className="mr-auto">
+     <Nav.Link href="jobpostlist">JobPosting</Nav.Link>
+     <Nav.Link href="profilelist">Applicants</Nav.Link>
+     <Nav.Link href="signin">Signout</Nav.Link>
+    </Nav>
     )
 }
 
