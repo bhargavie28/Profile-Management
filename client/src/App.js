@@ -1,24 +1,31 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Form1 from './Views/Form';
-import Navbar from './Views/Navbar';
-import Dashboard from './Views/Dashboard';
+import Navbar1 from './Components/layout/Navbar';
+import Dashboard from './Components/dashboard/DashBoard';
+
 import ProfileList from './Views/ProfileList';
-import SideBar from './Components/Grid/SideBar'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import SignIn from './Components/auth/SignIn';
+import CreateJobPost from './Components/jobposting/CreateJobPost';
+import JobPostList from './Components/jobposting/JobPostList';
+
 
 function App() {
   return (
-<div>
-  <Navbar />
-<Router>
-<Switch>
-  <Route path= "/form" component= {Form1} />
-  <Route path= "/profilelist" component= {ProfileList} />
-  </Switch>
-</Router>
-</div>
-
+    <BrowserRouter>
+    <div className="App">
+      <Navbar1 />
+      <Switch>
+         <Route exact path='/' component={Dashboard} />
+         <Route path='/signin' component={SignIn} />
+         <Route path= '/form' component= {Form1} />
+         <Route path= '/profilelist' component= {ProfileList} />
+         <Route path= '/createjob' component={CreateJobPost} />
+         <Route path= '/jobpostlist' component={JobPostList} />
+      </Switch>
+    </div>
+    </BrowserRouter>
   );
 }
 
