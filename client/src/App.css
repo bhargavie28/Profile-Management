@@ -72,7 +72,7 @@
 
 .color-nav {
   /* background-image: linear-gradient(to bottom right, #fdbb2d ,#22c1c3); */
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #008793, #004d7a);
 }
 
 .d-inline-block{
