@@ -14,7 +14,7 @@ class Navbar1 extends Component {
         width="30"
         height="30"
         className="d-inline-block align-top"
-      />{' '}ProjectManagement</Navbar.Brand>
+      />{' '}ProfileManagement</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
