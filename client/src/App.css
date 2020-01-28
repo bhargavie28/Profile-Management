@@ -69,16 +69,34 @@
   color: #FFF;
   font-size: large;
 }
+
+.color-nav {
+  /* background-image: linear-gradient(to bottom right, #fdbb2d ,#22c1c3); */
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+}
+
+.d-inline-block{
+  border-style : outset;
+  display: inline-block !important;
+}
+
+.navbar-brand{
+  margin-right: 1.75rem;
+}
 .color {
   color: #1976d2;
- 
+}
+
+.MuiSvgIcon-root{
+  color:cadetblue !important;
+  width: 50px !important;
+  height: 52px !important;
 }
 .table {
   font-size: small;
   flex-direction: row;
- 
-  
  }
+ 
 .container {
  font-size: small;
 }
