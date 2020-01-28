@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   
   email: {
     type: String,
+    unique: true
   },
   workphonenumber: {
     type: Number,
@@ -18,14 +19,14 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   workpermit: {
-    type: Number,
+    type: String,
     
   },
   dob: {
-    type: String,
+    type: Date,
   },
   preferredlocation: {
-    type: Number,
+    type: String,
   },
   address: {
     type: String,
@@ -61,7 +62,10 @@ const UserSchema = new mongoose.Schema({
   resume: {
     type: String,
   },
-  currentlocation: {
+  city: {
+    type: String,
+  },
+  state: {
     type: String,
   }
 

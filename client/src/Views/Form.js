@@ -5,9 +5,7 @@ import Col from "react-bootstrap/Col";
 
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from '../Components/Grid/DatePicker'
 
 
 
@@ -27,6 +25,7 @@ class Form1 extends Component {
     this.onChangePreferredLocation = this.onChangePreferredLocation.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeRole = this.onChangeRole.bind(this);
+    this.onChangePrimarySkills = this.onChangePrimarySkills.bind(this);
     this.onChangeEmployer = this.onChangeEmployer.bind(this);
     this.onChangeLinkedInUrl = this.onChangeLinkedInUrl.bind(this);
     this.onChangeSkypeID = this.onChangeSkypeID.bind(this);
@@ -36,7 +35,8 @@ class Form1 extends Component {
     this.onChangeGender = this.onChangeGender.bind(this);
     this.onChangeSource = this.onChangeSource.bind(this);
     this.onChangeResume = this.onChangeResume.bind(this);
-    this.onChangeCurrentLocation = this.onChangeCurrentLocation.bind(this);
+    this.onChangeState = this.onChangeState.bind(this);
+    this.onChangeCity = this.onChangeCity.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
 
 
@@ -52,8 +52,11 @@ class Form1 extends Component {
       workpermit: "",
       dob: "",
       preferredlocation: "",
-      address: "",
+      state: '',
+      city: '',
+      address:'',
       role: "",
+      primaryskills: [''],
       employer: "",
       linkedinurl: "",
       skypeid: "",
@@ -63,7 +66,6 @@ class Form1 extends Component {
       gender: "",
       source: "",
       resume: "",
-      currentlocation: ""
     };
   }
 
@@ -96,6 +98,9 @@ class Form1 extends Component {
   onChangeRole(e) {
     this.setState({ role: e.target.value });
   }
+  onChangePrimarySkills(e) {
+    this.setState({ primaryskills: e.target.value });
+  }
   onChangeEmployer(e) {
     this.setState({ employer: e.target.value });
   }
@@ -109,12 +114,14 @@ class Form1 extends Component {
     this.setState({ status: e.target.value });
   }
   onChangeRelocation(e) {
+    e.preventDefault();
     this.setState({ relocation: e.target.value });
   }
   onChangeTaxterms(e) {
     this.setState({ taxterms: e.target.value });
   }
   onChangeGender(e) {
+    e.preventDefault();
     this.setState({ gender: e.target.value });
   }
   onChangeSource(e) {
@@ -125,31 +132,30 @@ class Form1 extends Component {
       loaded: 0,
     });
   }
-  onChangeCurrentLocation(e) {
-    this.setState({ currentlocation: e.target.value });
+  onChangeState(e) {
+    this.setState({ state: e.target.value });
+  }
+  onChangeCity(e) {
+    this.setState({ city: e.target.value });
   }
   onClickHandler = () => {
     const data = new FormData() 
     data.append('file', this.state.selectedFile)
-    axios.post("http://localhost:5000/api/upload", data, { 
-  })
-  .then(res => { 
-    console.log(res.statusText)
- })
+  
 }
   onSubmit(e) {
     alert("User Saved");
     e.preventDefault();
     const profileObject = {
       name: this.state.name,
-    
       workphonenumber: this.state.workphonenumber,
       homephonenumber: this.state.homephonenumber,
       email: this.state.email,
       workpermit: this.state.workpermit,
       dob: this.state.dob,
       preferredlocation: this.state.preferredlocation,
-      currentlocation: this.state.currentlocation,
+      state: this.state.state,
+      city: this.state.city,
       address: this.state.address,
       role: this.state.role,
       primaryskills: this.state.primaryskills,
@@ -163,22 +169,24 @@ class Form1 extends Component {
       source: this.state.source,
       resume: this.state.resume
     };
+    
     axios
       .post("http://localhost:5000/api/user", profileObject)
       .then(res => console.log(res.data));
-      
-
+      console.log('axios connected')
+    
     
     this.setState({
       name: "",
       email: "",
       workphonenumber: "",
       homephonenumber: "",
-      workpermit: [],
+      workpermit: "",
       dob: "",
       preferredlocation: "",
       address: "",
       role: "",
+      primaryskills:[''],
       employer: "",
       linkedinurl: "",
       skypeid: "",
@@ -188,21 +196,13 @@ class Form1 extends Component {
       gender: "",
       source: "",
       resume: "",
-      currentlocation: ""
+      state: '',
+      city: ''
     });
   }
 
-  state = {
-    dob: ""
-  };
-  getDate() {
-    var dob = { currentTime: new Date().toLocaleString() };
-
-    this.setState({
-      dob: dob
-    });
-  }
-
+ 
+  
 
   render() {
     return (
@@ -276,10 +276,7 @@ class Form1 extends Component {
                           as="select"
                           className="form-control form-control-sm"
                           value={this.state.workpermit}
-                          onSelect={this.onChangeWorkPermit}
-
-
-                        >
+                          onChange={this.onChangeWorkPermit}>
                           <option></option>
                           <option>H1</option>
                         </Form.Control>
@@ -292,15 +289,18 @@ class Form1 extends Component {
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
-
+                          value={this.state.state}
+                          onChange= {this.onChangeState}
                         >
                           <option>Choose...</option>
-                          <option>Hyderabad</option>
+                          <option>Telangana</option>
                         </Form.Control>
                         <Form.Label>City</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
+                          vlaue = {this.state.city}
+                          onChange= {this.onChangeCity}
                         >
                           <option>Choose...</option>
                           <option>Hyderabad</option>
@@ -308,19 +308,15 @@ class Form1 extends Component {
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Date of Birth</Form.Label>
-                        <DatePicker
-              selected={ this.state.dob }
-              onChange={ this.onChangeDOB }
-              name="startDate"
-              dateFormat="MM/DD/YYYY"
-            />
-                   
+                        <DatePicker  value= {this.state.dob} onChange= {this.onChangeDOB}/>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Preferred Location</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
+                          value= {this.state.preferredlocation}
+                          onChange= {this.onChangePreferredLocation}
                         >
                           <option>Choose...</option>
                           <option>Hyderabad</option>
@@ -328,64 +324,101 @@ class Form1 extends Component {
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Control 
+                        className="form-control form-control-sm"
+                        value= {this.state.address}
+                        onChange= {this.onChangeAddress}
+                        ></Form.Control>
                       </Form.Group>
                      
                     </div>
                     <div className="col-sm-6">
                     <Form.Group controlId="formGridState">
                         <Form.Label>Role</Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Control 
+                         as="select"
+                        className="form-control form-control-sm"
+                        value = {this.state.role}
+                        onChange= {this.onChangeRole}
+                        >
+                          <option>Software Developer</option>
+                          <option>Quality Analyst</option>
+                        </Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Primary skills</Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Control className="form-control form-control-sm"
+                        value= {this.state.primaryskills}
+                        onChange= {this.onChangePrimarySkills}
+                        ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
-                        <Form.Label>Employer/optional</Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Label>Employer</Form.Label>
+                        <Form.Control className="form-control form-control-sm"
+                        value= {this.state.employer}
+                        onChange= {this.onChangeEmployer}
+                        ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>LinkedIn Profile URL</Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Control 
+                        
+                        className="form-control form-control-sm"
+                        value= {this.state.linkedinurl}
+                        onChange= {this.onChangeLinkedInUrl}
+                        ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
-                        <Form.Label>Skype ID:</Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Label>Skype ID</Form.Label>
+                        <Form.Control className="form-control form-control-sm"
+                          value= {this.state.skypeid}
+                          onChange= {this.onChangeSkypeID}
+                        ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
-                        <Form.Label>Current Applicant Status: </Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Label>Current Applicant Status </Form.Label>
+                        <Form.Control 
+                        as= "select"
+                        className="form-control form-control-sm"
+                        value= {this.state.status}
+                        onChange= {this.onChangeStatus}
+                        ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
-                        <Form.Label>Relocation: Yes/No </Form.Label>
+                        <Form.Label>Relocation</Form.Label>
+                       
                         <Form.Row>
                           <Col>
-                            <Form.Check type="radio" label="Yes" />
+                            <Form.Check type="radio" name ="relocation" label="Yes" value= {this.state.relocation} onChange= {this.onChangeRelocation}  />
                           </Col>
                           <Col>
-                            <Form.Check type="radio" label="No" />
+                            <Form.Check type="radio" name="relocation" label="No" value= {this.state.relocation} onChange= {this.onChangeRelocation} />
                           </Col>
                         </Form.Row>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
-                        <Form.Label>Tax terms: </Form.Label>
+                        <Form.Label>Tax terms </Form.Label>
                         <Form.Control className="form-control form-control-sm"></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
-                        <Form.Label>Gender: </Form.Label>
+                        <Form.Label>Gender </Form.Label>
                         <Form.Row>
                           <Col>
-                            <Form.Check type="radio" label="Male" />
+                            <Form.Check type="radio" name ="gender" label="Male"   onChange= {this.onChangeGender}/>
                           </Col>
                           <Col>
-                            <Form.Check type="radio" label="Female" />
+                            <Form.Check type="radio" name ="gender" label="Female"  onChange= {this.onChangeGender}/>
                           </Col>
                         </Form.Row>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
-                        <Form.Label>Source: </Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Label>Source </Form.Label>
+                        <Form.Control 
+                        as = "select"
+                        className="form-control form-control-sm"
+                        value= {this.state.source}
+                        onChange = {this.onChangeSource}
+                        ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridUpload">
                         <Form.Label>Upload Resume</Form.Label>
@@ -396,6 +429,7 @@ class Form1 extends Component {
                             id="input-file-now-custom-2"
                             className="file-upload"
                             data-height="500"
+                            value = {this.state.resume}
                             onChange={this.onChangeResume}
                            
                           />

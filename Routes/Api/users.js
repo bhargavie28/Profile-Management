@@ -41,7 +41,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, workphonenumber, homephonenumber,workpermit, dob, preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume,currentlocation } = req.body;
+    const { name, email, workphonenumber, homephonenumber,workpermit, dob, preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume, city, state } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -71,7 +71,8 @@ router.post(
       gender,
       source,
       resume,
-      currentlocation
+      city,
+      state
       });
 
       res.json({ user});

@@ -2,6 +2,7 @@ import React , {Component, Fragment} from 'react';
 
 import '../App.css';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
+import FloatingActionButtons from '../Components/Grid/AddIcon'
 class Navbar1 extends Component {
     render() {
         return(
@@ -9,11 +10,13 @@ class Navbar1 extends Component {
             <Fragment >
              
             <h1 className= "navbar">  <AccountCircleSharpIcon /> Profile Management</h1>
+        
           
           <br />
           </Fragment>
 
-          <div> </div>
+          <div> 
+          </div>
 
           </div>
   
