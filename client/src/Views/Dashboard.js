@@ -1,9 +1,7 @@
 import React, {Component,Fragment} from 'react';
-import { Route, Switch, Link, Redirect, BrowserRouter as Router } from 'react-router-dom';
-import ReactDOM from 'react-dom';
+import { Route, Switch,BrowserRouter as Router } from 'react-router-dom';
 import Form1 from './Form';
 import ProfileList from './ProfileList';
-import SideBar from '../Components/Grid/SideBar';
 
 
 class Dashboard extends Component {

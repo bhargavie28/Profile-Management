@@ -10,6 +10,9 @@ import SignIn from './Components/auth/SignIn';
 import CreateJobPost from './Components/jobposting/CreateJobPost';
 import JobPostList from './Components/jobposting/JobPostList';
 
+import Navbar from './Views/Navbar';
+import ProfileList from './Views/ProfileList';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 function App() {
   return (

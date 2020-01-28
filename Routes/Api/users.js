@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+
 
 const config = require('config');
 const { check, validationResult } = require('express-validator/check');
@@ -88,6 +90,7 @@ router.post(
     }
   }
 );
+
 
 
 
