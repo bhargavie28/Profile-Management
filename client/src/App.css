@@ -84,7 +84,7 @@
   margin-right: 1.75rem;
 }
 .color {
-  color: #1976d2;
+  color: #008793;
 }
 
 .MuiSvgIcon-root{
@@ -99,6 +99,7 @@
  
 .container {
  font-size: small;
+ text-align: left;
 }
 
 .profile {
@@ -106,6 +107,11 @@
 }
 .addIcon {
  justify-content: right;
+}
+
+.btn-primary {
+  background-color: #008793;
+
 }
 
 @keyframes App-logo-spin {

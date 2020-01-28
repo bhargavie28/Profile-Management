@@ -2,6 +2,8 @@ import React , {Component} from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import SignedInLinks from '../layout/SignedInLinks';
+import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
+
 
 class Navbar1 extends Component {
     render() {

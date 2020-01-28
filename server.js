@@ -3,11 +3,7 @@ const connectDB = require('./config/db');
 var cors = require('cors');
 
 const app = express();
-var multer = require('multer');
-const FILE_PATH = 'uploads';
-const upload = multer({
-    dest: `${FILE_PATH}/`
-});
+
 
 
 connectDB();
