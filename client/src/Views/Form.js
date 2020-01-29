@@ -21,7 +21,6 @@ class Form1 extends Component {
     this.onChangeWorkPhoneNumber = this.onChangeWorkPhoneNumber.bind(this);
     this.onChangeHomePhoneNumber = this.onChangeHomePhoneNumber.bind(this);
     this.onChangeWorkPermit = this.onChangeWorkPermit.bind(this);
-    this.onChangeDOB = this.onChangeDOB.bind(this);
     this.onChangePreferredLocation = this.onChangePreferredLocation.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeRole = this.onChangeRole.bind(this);
@@ -50,7 +49,6 @@ class Form1 extends Component {
       workphonenumber: "",
       homephonenumber: "",
       workpermit: "",
-      dob: "",
       preferredlocation: "",
       state: '',
       city: '',
@@ -86,9 +84,7 @@ class Form1 extends Component {
   onChangeWorkPermit(e) {
     this.setState({ workpermit: e.target.value });
   }
-  onChangeDOB(e) {
-    this.setState({ dob: e.target.value });
-  }
+ 
   onChangePreferredLocation(e) {
     this.setState({ preferredlocation: e.target.value });
   }
@@ -99,6 +95,7 @@ class Form1 extends Component {
     this.setState({ role: e.target.value });
   }
   onChangePrimarySkills(e) {
+    console.log(e.target.value);
     this.setState({ primaryskills: e.target.value });
   }
   onChangeEmployer(e) {
@@ -121,6 +118,7 @@ class Form1 extends Component {
     this.setState({ taxterms: e.target.value });
   }
   onChangeGender(e) {
+    console.log(e.target.value);
     e.preventDefault();
     this.setState({ gender: e.target.value });
   }
@@ -152,7 +150,6 @@ class Form1 extends Component {
       homephonenumber: this.state.homephonenumber,
       email: this.state.email,
       workpermit: this.state.workpermit,
-      dob: this.state.dob,
       preferredlocation: this.state.preferredlocation,
       state: this.state.state,
       city: this.state.city,
@@ -169,7 +166,7 @@ class Form1 extends Component {
       source: this.state.source,
       resume: this.state.resume
     };
-    
+    console.log({profileObject});
     axios
       .post("http://localhost:5000/api/user", profileObject)
       .then(res => console.log(res.data));
@@ -182,7 +179,6 @@ class Form1 extends Component {
       workphonenumber: "",
       homephonenumber: "",
       workpermit: "",
-      dob: "",
       preferredlocation: "",
       address: "",
       role: "",
@@ -283,7 +279,7 @@ class Form1 extends Component {
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Current Location</Form.Label>
-                      </Form.Group>
+                     
                       <Form.Group controlId="formGridState">
                         <Form.Label>State</Form.Label>
                         <Form.Control
@@ -295,6 +291,8 @@ class Form1 extends Component {
                           <option>Choose...</option>
                           <option>Telangana</option>
                         </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="formGridState">
                         <Form.Label>City</Form.Label>
                         <Form.Control
                           as="select"
@@ -306,9 +304,9 @@ class Form1 extends Component {
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
+                      </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Date of Birth</Form.Label>
-                        <DatePicker  value= {this.state.dob} onChange= {this.onChangeDOB}/>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Preferred Location</Form.Label>
@@ -341,6 +339,7 @@ class Form1 extends Component {
                         value = {this.state.role}
                         onChange= {this.onChangeRole}
                         >
+                           <option>Select</option>
                           <option>Software Developer</option>
                           <option>Quality Analyst</option>
                         </Form.Control>
@@ -389,10 +388,12 @@ class Form1 extends Component {
                        
                         <Form.Row>
                           <Col>
-                            <Form.Check type="radio" name ="relocation" label="Yes" value= {this.state.relocation} onChange= {this.onChangeRelocation}  />
+                            <Form.Check type="radio" value ="Yes" checked={this.state.relocation === "Yes"} onChange= {this.onChangeRelocation}  />
+                            Yes
                           </Col>
                           <Col>
-                            <Form.Check type="radio" name="relocation" label="No" value= {this.state.relocation} onChange= {this.onChangeRelocation} />
+                            <Form.Check type="radio" value ="No" checked={this.state.relocation === "No"} onChange= {this.onChangeRelocation} />
+                            No
                           </Col>
                         </Form.Row>
                       </Form.Group>
@@ -404,10 +405,12 @@ class Form1 extends Component {
                         <Form.Label>Gender </Form.Label>
                         <Form.Row>
                           <Col>
-                            <Form.Check type="radio" name ="gender" label="Male"   onChange= {this.onChangeGender}/>
+                            <Form.Check type="radio" value ="Female" checked={this.state.gender === "Female"}    onChange= {this.onChangeGender}/>
+                            Female
                           </Col>
                           <Col>
-                            <Form.Check type="radio" name ="gender" label="Female"  onChange= {this.onChangeGender}/>
+                            <Form.Check type="radio" value ="Male" checked={this.state.gender === "Male"}  onChange= {this.onChangeGender}/>
+                            Male
                           </Col>
                         </Form.Row>
                       </Form.Group>

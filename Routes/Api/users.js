@@ -20,7 +20,7 @@ router.get('/', async (req,res)=>{
   {
     res.json(data)
   }
-})
+})  
 
 })
 
@@ -40,7 +40,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, workphonenumber, homephonenumber,workpermit, dob, preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume, city, state } = req.body;
+    const { name, email, workphonenumber, homephonenumber,workpermit, dob, preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume, city, state, primaryskills} = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -71,8 +71,36 @@ router.post(
       source,
       resume,
       city,
-      state
+      state,
+      primaryskills
       });
+
+      const profileObject = {};
+    profileObject.user = req.user.id;
+    if (name) profileFields.name = name;
+    if (email) profileFields.email = email;
+    if (workphonenumber) profileFields.workphonenumber = workphonenumber;
+    if (homephonenumber) profileFields.homephonenumber = homephonenumber;
+    if (workpermit) profileFields.workpermit = workpermit;
+    if (dob) profileFields.dob = dob;
+    if (preferredlocation) profileFields.preferredlocation = preferredlocation;
+    if (address) profileFields.address = address;
+    if (role) profileFields.role = role;
+    if (employer) profileFields.employer = employer;
+    if (linkedinurl) profileFields.linkedinurl = linkedinurl;
+    if (skypeid) profileFields.skypeid = skypeid;
+    if (status) profileFields.status = status;
+    if (relocation) profileFields.relocation = relocation;
+    if (taxterms) profileFields.taxterms = taxterms;
+    if (gender) profileFields.gender = gender;
+    if (source) profileFields.source = source;
+    if (resume) profileFields.resume = resume;
+    if (city) profileFields.city = city;
+    if (state) profileFields.state = state;
+
+    if (primaryskills) {
+      profileFields.primaryskills = primaryskills.split(',').map(skill => skill.trim());
+    }
 
       res.json({ user});
       await user.save();
@@ -90,6 +118,22 @@ router.post(
     }
   }
 );
+router.delete('/:id', async (req,res)=>{
+
+  await User.findByIdAndDelete(req.params.id)
+  res.json({'message': 'deleted'})
+
+ 
+})
+
+router.post('/:id', async (req,res)=>{
+
+  await User.findByIdAndUpdate(req.params.id, req.body)
+  res.json({'message': 'Updated'})
+})
+
+
+
 
 
 
