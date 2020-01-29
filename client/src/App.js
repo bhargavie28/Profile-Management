@@ -7,6 +7,7 @@ import ProfileList from './Views/ProfileList';
 import SignIn from './Components/auth/SignIn';
 import CreateJobPost from './Components/jobposting/CreateJobPost';
 import JobPostList from './Components/jobposting/JobPostList';
+import EditApplication from './Views/EditApplication';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
          <Route exact path='/' component={Dashboard} />
          <Route path='/signin' component={SignIn} />
          <Route path= '/form' component= {Form1} />
+         <Route path= '/editProfile' component= {EditApplication} />
+
          <Route path= '/profilelist' component= {ProfileList} />
          <Route path= '/createjob' component={CreateJobPost} />
          <Route path= '/jobpostlist' component={JobPostList} />

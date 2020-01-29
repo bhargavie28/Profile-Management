@@ -44,7 +44,6 @@ class Form1 extends Component {
 
     this.state = {
       name: "",
-     
       email: "",
       workphonenumber: "",
       homephonenumber: "",
@@ -141,7 +140,7 @@ class Form1 extends Component {
     data.append('file', this.state.selectedFile)
   
 }
-  onSubmit(e) {
+  onSubmit(e,id) {
     alert("User Saved");
     e.preventDefault();
     const profileObject = {
@@ -167,11 +166,12 @@ class Form1 extends Component {
       resume: this.state.resume
     };
     console.log({profileObject});
+
     axios
-      .post("http://localhost:5000/api/user", profileObject)
+      .post(`http://localhost:5000/api/user`, profileObject)
       .then(res => console.log(res.data));
       console.log('axios connected')
-    
+
     
     this.setState({
       name: "",
@@ -195,7 +195,10 @@ class Form1 extends Component {
       state: '',
       city: ''
     });
+  
   }
+
+
 
  
   
@@ -223,7 +226,7 @@ class Form1 extends Component {
           <div class="form-group form-group-sm">
             <div class="row">
               <div className="col-sm-12">
-                <Form>
+                <Form >
                   <div class="row">
                     <div className="col-sm-6">
                       <Form.Group controlId="firstname">

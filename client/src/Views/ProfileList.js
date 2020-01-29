@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Button } from "react";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import ProfileTableRow from './ProfileTableRow';
 import AddIcon from '../Components/Grid/AddIcon';
+import Form1 from './Form';
 
 class ProfileList extends Component 
 {
@@ -17,9 +18,11 @@ class ProfileList extends Component
     componentDidMount() {
         axios.get('http://localhost:5000/api/user/')
           .then(res => {
+            console.log(res.data)
             this.setState({
               profiles: res.data
             });
+
           })
           .catch((error) => {
             console.log(error);
@@ -27,6 +30,7 @@ class ProfileList extends Component
       }
       DataTable() {
         return this.state.profiles.map((res, i) => {
+
           return <ProfileTableRow obj={res} key={i} />;
         });
       }
@@ -45,6 +49,8 @@ class ProfileList extends Component
                 <th>Email</th>
                 <th>Work Authorization</th>
                 <th>City</th>
+                <th>Edit</th>
+                <th>Delete</th>
 
 
               </tr>

@@ -25,6 +25,11 @@ router.get('/', async (req,res)=>{
 })
 
 
+
+
+
+
+
 router.post(
   '/',
   [
@@ -51,6 +56,7 @@ router.post(
           .json({ errors: [{ msg: 'User already exists' }] });
       }
 
+ 
       user = new User({
       name,
       email,
@@ -118,12 +124,21 @@ router.post(
     }
   }
 );
+
 router.delete('/:id', async (req,res)=>{
 
   await User.findByIdAndDelete(req.params.id)
   res.json({'message': 'deleted'})
 
  
+})
+
+router.get('/:id',  (req,res)=>{
+
+   User.findById(req.params.id, (err,data)=>{
+    res.json(data)
+   })
+    
 })
 
 router.post('/:id', async (req,res)=>{
