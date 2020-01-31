@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+
   name: {
     type: String,
     required: true
@@ -71,8 +73,6 @@ const UserSchema = new mongoose.Schema({
   primaryskills: {
     type: [String],
   }
-
-
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

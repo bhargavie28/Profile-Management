@@ -5,7 +5,10 @@ import Col from "react-bootstrap/Col";
 
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import DatePicker from '../Components/Grid/DatePicker'
+import Spinner from './Spinner';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import {NavLink} from 'react-router-dom';
+import UploadImage from './UploadImage';
 
 
 
@@ -63,6 +66,7 @@ class Form1 extends Component {
       gender: "",
       source: "",
       resume: "",
+      isLoading: false
     };
   }
 
@@ -140,7 +144,7 @@ class Form1 extends Component {
     data.append('file', this.state.selectedFile)
   
 }
-  onSubmit(e,id) {
+  onSubmit(e) {
     alert("User Saved");
     e.preventDefault();
     const profileObject = {
@@ -193,7 +197,8 @@ class Form1 extends Component {
       source: "",
       resume: "",
       state: '',
-      city: ''
+      city: '',
+      isLoading: true
     });
   
   }
@@ -205,21 +210,14 @@ class Form1 extends Component {
 
   render() {
     return (
+      this.state.isLoading ?( <Spinner />) : 
       
-      <Container>
-        <Fragment>
+     ( <Container>
+        <Fragment  className= "back">
+        <NavLink to = "/profilelist"><KeyboardBackspaceIcon /></NavLink>
           <h3 className="color">Personal Details</h3>
           <Divider />
-          {/* <Navbar >
-            <Navbar.Brand > Personal Details</Navbar.Brand>
-            <Nav className = "tab_container_heading" >
-              <Nav.Link href="/Save">Save</Nav.Link>
-              <Nav.Link href="/Reset">Reset</Nav.Link>
-             
-            </Nav>
-           
-          </Navbar>
-          <br /> */}
+        
         </Fragment>
 
         <Container className="container">
@@ -426,22 +424,7 @@ class Form1 extends Component {
                         onChange = {this.onChangeSource}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridUpload">
-                        <Form.Label>Upload Resume</Form.Label>
-                        <div className="file-upload">
-                        <Button onClick= {this.onClickHandler}>Upload</Button>
-                          <input
-                            type="file"
-                            id="input-file-now-custom-2"
-                            className="file-upload"
-                            data-height="500"
-                            value = {this.state.resume}
-                            onChange={this.onChangeResume}
-                           
-                          />
-                         
-                        </div>
-                      </Form.Group>
+                     <UploadImage />
                     </div>
                   </div>
                 </Form>
@@ -459,7 +442,7 @@ class Form1 extends Component {
             </div>
           </div>
         </Container>
-      </Container>
+      </Container>)
       
     );
   }

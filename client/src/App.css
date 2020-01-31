@@ -30,6 +30,9 @@
   width: 50;
   
 }
+.back {
+  flex-direction: row;
+}
 
 
 #submit{

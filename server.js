@@ -11,6 +11,8 @@ app.use(cors())
 app.get('/', (req, res) => res.send('API running'));
 app.use(express.json({ extended: false }));
 app.use('/api/user', require('./Routes/Api/users'));
+app.use('/api/upload', require('./Routes/Api/upload'));
+
 const PORT = 5000;
 
 

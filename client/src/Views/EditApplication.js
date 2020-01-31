@@ -1,12 +1,15 @@
 import React, { Component, Fragment } from "react";
+import {NavLink} from 'react-router-dom';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import DatePicker from '../Components/Grid/DatePicker'
-
+import DatePicker from '../Components/Grid/DatePicker';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import UploadImage from './UploadImage';
 
 
 
@@ -14,6 +17,8 @@ import axios from "axios";
 import "../App.css";
 import { Divider } from "@material-ui/core";
 class EditApplication extends Component {
+  
+
   constructor(props) {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
@@ -43,6 +48,7 @@ class EditApplication extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      _id: 0,
       name: "",
       email: "",
       workphonenumber: "",
@@ -65,13 +71,13 @@ class EditApplication extends Component {
       resume: "",
     };
   }
-
   componentDidMount(){
-
-    axios.get('http://localhost:5000/api/user/:id')
+    var id = this.props.location.pathname.split('/').pop();
+    axios.get(`http://localhost:5000/api/user/` + id)
     .then(res=> {
       
       this.setState({
+        _id:id,
         name: res.data.name,
         email: res.data.email,
         workphonenumber: res.data.workphonenumber,
@@ -93,6 +99,7 @@ class EditApplication extends Component {
         state: res.data.state,
         city: res.data.city
       });
+     
     })
     .catch((error)=> {
       console.log(error);
@@ -175,10 +182,12 @@ class EditApplication extends Component {
     data.append('file', this.state.selectedFile)
   
 }
-  onSubmit(e,id) {
+  onSubmit(e) {
+    console.log(this.state._id)
     alert("User Updated");
     e.preventDefault();
     const profileObject = {
+      _id:this.state._id,
       name: this.state.name,
       workphonenumber: this.state.workphonenumber,
       homephonenumber: this.state.homephonenumber,
@@ -201,16 +210,16 @@ class EditApplication extends Component {
       resume: this.state.resume
     };
 
-    axios.post('http://localhost:5000/api/user/' + this.props.match.params.id, profileObject)
+    axios.post('http://localhost:5000/api/user/'+ this.state._id, profileObject)
       .then((res) => {
-        console.log(res.data)
+        
         console.log('Profile successfully updated')
       }).catch((error) => {
         console.log(error)
       })
 
     // Redirect to Student List 
-    this.props.history.push('/viewProfiles')
+    this.props.history.push('/profilelist')
   }
     
 
@@ -220,10 +229,12 @@ class EditApplication extends Component {
   
 
   render() {
+    
     return (
       
       <Container>
-        <Fragment>
+        <Fragment className= "back" >
+        <NavLink to = "/profilelist"><KeyboardBackspaceIcon /></NavLink>
           <h3 className="color">Personal Details</h3>
           <Divider />
         </Fragment>
@@ -232,9 +243,10 @@ class EditApplication extends Component {
           <div class="form-group form-group-sm">
             <div class="row">
               <div className="col-sm-12">
-                <Form onSubmit={this.onSubmit}>
+                <Form >
                   <div class="row">
                     <div className="col-sm-6">
+                  
                       <Form.Group controlId="firstname">
                         <Form.Label>Applicant Name</Form.Label>
                         
@@ -432,27 +444,12 @@ class EditApplication extends Component {
                         onChange = {this.onChangeSource}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridUpload">
-                        <Form.Label>Upload Resume</Form.Label>
-                        <div className="file-upload">
-                        <Button onClick= {this.onClickHandler}>Upload</Button>
-                          <input
-                            type="file"
-                            id="input-file-now-custom-2"
-                            className="file-upload"
-                            data-height="500"
-                            value = {this.state.resume}
-                            onChange={this.onChangeResume}
-                           
-                          />
-                         
-                        </div>
-                      </Form.Group>
+                   <UploadImage />                       
                     </div>
                   </div>
                 </Form>
                 <div>
-                <Button variant="danger" size="lg" block="block" type="submit">
+                <Button variant="danger" size="lg" block="block" type="submit" onClick={this.onSubmit}>
           Update
         </Button>
                   

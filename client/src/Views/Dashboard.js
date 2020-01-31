@@ -15,8 +15,9 @@ class Dashboard extends Component {
             <Switch>
               <Route exact path='/' component={ProfileList} />
               <Route exact path='/createProfile' component={Form1} />
-              <Route exact path ='/viewProfiles' component = {ProfileList} />
-              <Route exact path ='/editProfile' component = {EditApplication} />
+              <Route exact path ='/profilelist' component = {ProfileList} />
+              <Route exact path ='/editProfile/:id'
+               render={(props) => (<EditApplication {...this.props}/>)} />
 
               
             </Switch>

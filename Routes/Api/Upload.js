@@ -1,44 +1,66 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
+let express = require('express'),
+    multer = require('multer'),
+    mongoose = require('mongoose'),
+    uuidv4 = require('uuid/v4'),
+    router = express.Router();
 
+const DIR = './public/';
 
-const config = require('config');
-const { check, validationResult } = require('express-validator/check');
-
-const User = require('../../models/User');
-const FILE_PATH = 'uploads';
-
-const upload = multer({
-  dest: `${FILE_PATH}/`
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuidv4() + '-' + fileName)
+    }
 });
 
-router.post('/upload-avatar', upload.single('avatar'), async (req, res) => {
-    try {
-        const avatar = req.file;
-  
-        // make sure file is available
-        if (!avatar) {
-            res.status(400).send({
-                status: false,
-                data: 'No file is selected.'
-            });
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
         } else {
-            // send response
-            res.send({
-                status: true,
-                message: 'File is uploaded.',
-                data: {
-                    name: avatar.originalname,
-                    mimetype: avatar.mimetype,
-                    size: avatar.size
-                }
-            });
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
         }
-  
-    } catch (err) {
-        res.status(500).send(err);
     }
-  });
-  
-  module.exports = router;  
+});
+
+// User model
+const Upload = require('../../Models/Upload');
+
+router.post('/user-profile', upload.single('profileImg'), (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host')
+    const upload = new Upload({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        profileImg: url + '/public/' + req.file.filename
+    });
+    upload.save().then(result => {
+        res.status(201).json({
+            message: "User registered successfully!",
+            userCreated: {
+                _id: result._id,
+                profileImg: result.profileImg
+            }
+        })
+    }).catch(err => {
+        console.log(err),
+            res.status(500).json({
+                error: err
+            });
+    })
+})
+
+router.get("/", (req, res, next) => {
+    Upload.find().then(data => {
+        res.status(200).json({
+            message: "User list retrieved successfully!",
+            upload: data
+        });
+    });
+});
+
+module.exports = router;
