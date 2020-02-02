@@ -29,6 +29,8 @@ import Button from 'react-bootstrap/Button';
                 <td>{this.props.obj.email}</td>
                 <td>{this.props.obj.workpermit}</td>
                 <td>{this.props.obj.city}</td>
+                <td>{this.props.obj.profileImg}</td>
+                <td>{this.props.obj.primaryskills}</td>
                 <td>
              <Link to={"/editProfile/" + this.props.obj._id}>Edit</Link>
              

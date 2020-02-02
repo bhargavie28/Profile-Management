@@ -49,6 +49,8 @@ class ProfileList extends Component
                 <th>Email</th>
                 <th>Work Authorization</th>
                 <th>City</th>
+                <th>Resume</th>
+        <th>Skillset</th>
               
 
 

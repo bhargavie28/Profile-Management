@@ -2,13 +2,17 @@ import React, { Component, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-
+import DatePicker from 'react-datepicker';
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Spinner from './Spinner';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import {NavLink} from 'react-router-dom';
 import UploadImage from './UploadImage';
+import SimpleReactValidator from 'simple-react-validator';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -19,7 +23,10 @@ import { Divider } from "@material-ui/core";
 class Form1 extends Component {
   constructor(props) {
     super(props);
+    this.validator = new SimpleReactValidator();
+
     this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeDOB= this.onChangeDOB.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeWorkPhoneNumber = this.onChangeWorkPhoneNumber.bind(this);
     this.onChangeHomePhoneNumber = this.onChangeHomePhoneNumber.bind(this);
@@ -36,14 +43,13 @@ class Form1 extends Component {
     this.onChangeTaxterms = this.onChangeTaxterms.bind(this);
     this.onChangeGender = this.onChangeGender.bind(this);
     this.onChangeSource = this.onChangeSource.bind(this);
-    this.onChangeResume = this.onChangeResume.bind(this);
     this.onChangeState = this.onChangeState.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
-    this.onClickHandler = this.onClickHandler.bind(this);
-
-
-
+    this.onFileChange = this.onFileChange.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+
 
     this.state = {
       name: "",
@@ -65,7 +71,8 @@ class Form1 extends Component {
       taxterms: "",
       gender: "",
       source: "",
-      resume: "",
+      profileImg: "",
+      dob: moment(),
       isLoading: false
     };
   }
@@ -128,9 +135,8 @@ class Form1 extends Component {
   onChangeSource(e) {
     this.setState({ source: e.target.value });
   }
-  onChangeResume(e) {
+  onFileChange(e) {
     this.setState({ resume:  e.target.files[0],
-      loaded: 0,
     });
   }
   onChangeState(e) {
@@ -139,74 +145,86 @@ class Form1 extends Component {
   onChangeCity(e) {
     this.setState({ city: e.target.value });
   }
-  onClickHandler = () => {
-    const data = new FormData() 
-    data.append('file', this.state.selectedFile)
-  
+  onFileChange(e) {
+    this.setState({ profileImg: e.target.files[0] })
 }
+
+onChangeDOB(date) {
+  this.setState({
+    dob: date
+  })
+}
+onNameChange(e) {
+    this.setState({ name: e.target.value })
+}
+  
+  
   onSubmit(e) {
     alert("User Saved");
     e.preventDefault();
-    const profileObject = {
-      name: this.state.name,
-      workphonenumber: this.state.workphonenumber,
-      homephonenumber: this.state.homephonenumber,
-      email: this.state.email,
-      workpermit: this.state.workpermit,
-      preferredlocation: this.state.preferredlocation,
-      state: this.state.state,
-      city: this.state.city,
-      address: this.state.address,
-      role: this.state.role,
-      primaryskills: this.state.primaryskills,
-      employer: this.state.employer,
-      linkedinurl: this.state.linkedinurl,
-      skypeid: this.state.skypeid,
-      status: this.state.status,
-      relocation: this.state.relocation,
-      taxterms: this.state.taxterms,
-      gender: this.state.gender,
-      source: this.state.source,
-      resume: this.state.resume
-    };
-    console.log({profileObject});
+    // const profileObject = {
+    //   name: this.state.name,
+    //   workphonenumber: this.state.workphonenumber,
+    //   homephonenumber: this.state.homephonenumber,
+    //   email: this.state.email,
+    //   workpermit: this.state.workpermit,
+    //   preferredlocation: this.state.preferredlocation,
+    //   state: this.state.state,
+    //   city: this.state.city,
+    //   address: this.state.address,
+    //   role: this.state.role,
+    //   primaryskills: this.state.primaryskills,
+    //   employer: this.state.employer,
+    //   linkedinurl: this.state.linkedinurl,
+    //   skypeid: this.state.skypeid,
+    //   status: this.state.status,
+    //   relocation: this.state.relocation,
+    //   taxterms: this.state.taxterms,
+    //   gender: this.state.gender,
+    //   source: this.state.source,
+    //   profileImg: this.state.resume
+    // };
+    // console.log({profileObject});
+
+    const data = new FormData() 
+    data.append('profileImg', this.state.profileImg)
+    data.append('name', this.state.name)
+    data.append('email', this.state.email)
+    data.append('workphonenumber', this.state.workphonenumber)
+    data.append('homephonenumber', this.state.homephonenumber)
+    data.append('workpermit', this.state.workpermit)
+    data.append('preferredlocation', this.state.preferredlocation)
+    data.append('state', this.state.state)
+    data.append('city', this.state.city)
+    data.append('address', this.state.address)
+    data.append('role', this.state.role)
+    data.append('primaryskills', this.state.primaryskills)
+    data.append('employer', this.state.employer)
+    data.append('linkedinurl', this.state.linkedinurl)
+    data.append('skypeid', this.state.skypeid)
+    data.append('status', this.state.status)
+    data.append('relocation', this.state.relocation)
+    data.append('taxterms', this.state.taxterms)
+    data.append('gender', this.state.gender)
+    data.append('source', this.state.source)
+    data.append('dob', this.state.dob)
+
 
     axios
-      .post(`http://localhost:5000/api/user`, profileObject)
-      .then(res => console.log(res.data));
-      console.log('axios connected')
-
+      .post(`http://localhost:5000/api/user`, data)
+      .then(res => console.log(res));
     
-    this.setState({
-      name: "",
-      email: "",
-      workphonenumber: "",
-      homephonenumber: "",
-      workpermit: "",
-      preferredlocation: "",
-      address: "",
-      role: "",
-      primaryskills:[''],
-      employer: "",
-      linkedinurl: "",
-      skypeid: "",
-      status: "",
-      relocation: "",
-      taxterms: "",
-      gender: "",
-      source: "",
-      resume: "",
-      state: '',
-      city: '',
-      isLoading: true
-    });
-  
   }
-
-
-
- 
-  
+  onSubmit() {
+    if (this.validator.allValid()) {
+      alert('You submitted the form and stuff!');
+    } else {
+      this.validator.showMessages();
+      // rerender to show messages for the first time
+      // you can use the autoForceUpdate option to do this automatically`
+      this.forceUpdate();
+    }
+  }
 
   render() {
     return (
@@ -236,8 +254,9 @@ class Form1 extends Component {
                           value={this.state.name}
                           onChange={this.onChangeName}
                           className="form-control form-control-sm"
-                         
+                            required                         
                         />
+
                       </Form.Group>
                     
                   
@@ -266,6 +285,17 @@ class Form1 extends Component {
                           placeholder="abc@gmail.com"
                           className="form-control form-control-sm"
                         />
+                      </Form.Group>
+                      <Form.Group>
+                      <div className="form-group">
+            <label> Date of Birth</label>
+            <DatePicker
+              selected={ this.state.dob }
+              onChange={ this.onChangeDOB }
+              name="startDate"
+              dateFormat="MM/DD/YYYY"
+            />
+          </div>
                       </Form.Group>
                       <Form.Group controlId="formGridState">
                         <Form.Label>Work Permit</Form.Label>
@@ -424,8 +454,13 @@ class Form1 extends Component {
                         onChange = {this.onChangeSource}
                         ></Form.Control>
                       </Form.Group>
-                     <UploadImage />
-                    </div>
+                      <div className="form-group">
+                            <input type="file" onChange={this.onFileChange} />
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="submit">Upload</button>
+                        </div>                    
+                          </div>
                   </div>
                 </Form>
                 <div>

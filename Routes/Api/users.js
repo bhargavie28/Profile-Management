@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const multer = require('multer');
+const uuidv4 = require('uuid/v4')
 const config = require('config');
 const { check, validationResult } = require('express-validator/check');
+const DIR = './public/';
+
 
 const User = require('../../models/User');
 
@@ -27,25 +31,49 @@ router.get('/', async (req,res)=>{
 
 
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, DIR);
+  },
+  filename: (req, file, cb) => {
+      const fileName = file.originalname.toLowerCase().split(' ').join('-');
+      cb(null, uuidv4() + '-' + fileName)
+  }
+});
 
+var upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+       //if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "file/doc") {
+           cb(null, true);
+     //  } else {
+         //  cb(null, false);
+        //   return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+     //  }
+  }
+});
 
 router.post(
   '/',
-  [
-    check('name', 'Name is required')
-      .not()
-      .isEmpty(),
-    check('email', 'Please include a valid email').isEmail()
+  // [
+  //   check('name', 'Name is required')
+  //     .not()
+  //     .isEmpty(),
+  //   check('email', 'Please include a valid email').isEmail()
 
-  ],
+  // ],
+   upload.single('profileImg'),
   
   async (req, res) => {
+  const url = req.protocol + '://' + req.get('host')
+
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, workphonenumber, homephonenumber,workpermit, dob, preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume, city, state, primaryskills, profileImg} = req.body;
+    const { name, email, workphonenumber, homephonenumber,workpermit, dob,preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume, city, state, primaryskills, profileImg} = req.body;
     try {
       let user = await User.findOne({ email });
       
@@ -59,8 +87,8 @@ router.post(
  
       user = new User({
         _id: new mongoose.Types.ObjectId(),
-      name,
-      email,
+      name: req.body.name,
+      email: req.body.email,
       workphonenumber,
       homephonenumber,
       workpermit,
@@ -80,8 +108,8 @@ router.post(
       city,
       state,
       primaryskills,
-      profileImg
-      });
+      profileImg: url + '/public/' + req.file.filename
+    });
       console.log(user);
       const profileObject = {};
     profileObject.user = req.user?req.user.id:'';

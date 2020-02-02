@@ -444,8 +444,12 @@ class EditApplication extends Component {
                         onChange = {this.onChangeSource}
                         ></Form.Control>
                       </Form.Group>
-                   <UploadImage />                       
-                    </div>
+                      <div className="form-group">
+                            <input type="file" onChange={this.onFileChange} />
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="submit">Upload</button>
+                        </div>                       </div>
                   </div>
                 </Form>
                 <div>
