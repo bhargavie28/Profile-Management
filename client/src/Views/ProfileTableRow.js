@@ -16,6 +16,7 @@ import Button from 'react-bootstrap/Button';
             .then((res) => {
                 console.log('Profile successfully deleted!')
                 alert('Profile successfully deleted!')
+                
             }).catch((error) => {
                 console.log(error)
                 alert(error)
@@ -29,7 +30,9 @@ import Button from 'react-bootstrap/Button';
                 <td>{this.props.obj.email}</td>
                 <td>{this.props.obj.workpermit}</td>
                 <td>{this.props.obj.city}</td>
-                <td>{this.props.obj.profileImg}</td>
+                <td> <a href= {this.props.obj.profileImg}>Download Profile</a>  
+               
+                </td>
                 <td>{this.props.obj.primaryskills}</td>
                 <td>
              <Link to={"/editProfile/" + this.props.obj._id}>Edit</Link>

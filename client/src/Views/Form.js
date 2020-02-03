@@ -1,25 +1,22 @@
 import React, { Component, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
+import { Button, Nav } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import DatePicker from 'react-datepicker';
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Spinner from './Spinner';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import UploadImage from './UploadImage';
 import SimpleReactValidator from 'simple-react-validator';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-
-
 import axios from "axios";
 import "../App.css";
 import { Divider } from "@material-ui/core";
+import ProfileList from "./ProfileList";
 class Form1 extends Component {
   constructor(props) {
     super(props);
@@ -157,35 +154,17 @@ onChangeDOB(date) {
 onNameChange(e) {
     this.setState({ name: e.target.value })
 }
+
+onClickHandler(e) {
+
+alert('File Uploaded')
+}
   
   
   onSubmit(e) {
     alert("User Saved");
     e.preventDefault();
-    // const profileObject = {
-    //   name: this.state.name,
-    //   workphonenumber: this.state.workphonenumber,
-    //   homephonenumber: this.state.homephonenumber,
-    //   email: this.state.email,
-    //   workpermit: this.state.workpermit,
-    //   preferredlocation: this.state.preferredlocation,
-    //   state: this.state.state,
-    //   city: this.state.city,
-    //   address: this.state.address,
-    //   role: this.state.role,
-    //   primaryskills: this.state.primaryskills,
-    //   employer: this.state.employer,
-    //   linkedinurl: this.state.linkedinurl,
-    //   skypeid: this.state.skypeid,
-    //   status: this.state.status,
-    //   relocation: this.state.relocation,
-    //   taxterms: this.state.taxterms,
-    //   gender: this.state.gender,
-    //   source: this.state.source,
-    //   profileImg: this.state.resume
-    // };
-    // console.log({profileObject});
-
+   
     const data = new FormData() 
     data.append('profileImg', this.state.profileImg)
     data.append('name', this.state.name)
@@ -212,19 +191,12 @@ onNameChange(e) {
 
     axios
       .post(`http://localhost:5000/api/user`, data)
-      .then(res => console.log(res));
+      .then(res =>  <Redirect to='/profilelist' />);
+    
+
     
   }
-  onSubmit() {
-    if (this.validator.allValid()) {
-      alert('You submitted the form and stuff!');
-    } else {
-      this.validator.showMessages();
-      // rerender to show messages for the first time
-      // you can use the autoForceUpdate option to do this automatically`
-      this.forceUpdate();
-    }
-  }
+ 
 
   render() {
     return (
@@ -242,7 +214,7 @@ onNameChange(e) {
           <div class="form-group form-group-sm">
             <div class="row">
               <div className="col-sm-12">
-                <Form >
+                <Form onSubmit= {this.onSubmit}>
                   <div class="row">
                     <div className="col-sm-6">
                       <Form.Group controlId="firstname">
@@ -266,6 +238,7 @@ onNameChange(e) {
                           value={this.state.workphonenumber}
                           onChange={this.onChangeWorkPhoneNumber}
                           className="form-control form-control-sm"
+                          required
                         />
                       </Form.Group>
                       <Form.Group controlId="homenumber">
@@ -274,6 +247,7 @@ onNameChange(e) {
                           value={this.state.homephonenumber}
                           onChange={this.onChangeHomePhoneNumber}
                           className="form-control form-control-sm"
+                          required
                         />
                       </Form.Group>
                       <Form.Group controlId="formGridAddress1">
@@ -284,9 +258,10 @@ onNameChange(e) {
                           onChange={this.onChangeEmail}
                           placeholder="abc@gmail.com"
                           className="form-control form-control-sm"
+                          required
                         />
                       </Form.Group>
-                      <Form.Group>
+                      {/* <Form.Group>
                       <div className="form-group">
             <label> Date of Birth</label>
             <DatePicker
@@ -296,19 +271,31 @@ onNameChange(e) {
               dateFormat="MM/DD/YYYY"
             />
           </div>
-                      </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      </Form.Group> */}
+                      <Form.Group controlId="formGridWorkPermit">
                         <Form.Label>Work Permit</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
                           value={this.state.workpermit}
-                          onChange={this.onChangeWorkPermit}>
-                          <option></option>
-                          <option>H1</option>
+                          onChange={this.onChangeWorkPermit}
+                          required>
+
+                          <option>Select</option>
+                          <option>H1-B</option>
+                          <option>B1</option>
+                          <option>Citizen</option>
+                          <option>GC</option>
+                          <option>GC-EAD</option>
+                          <option>L1-A</option>
+                          <option>L1-B</option>
+                          <option>L2-EAD</option>
+                          <option>OPT-EAD</option>
+                          <option>TN Visa</option>
+
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridCurrentLocation">
                         <Form.Label>Current Location</Form.Label>
                      
                       <Form.Group controlId="formGridState">
@@ -318,40 +305,43 @@ onNameChange(e) {
                           className="form-control form-control-sm"
                           value={this.state.state}
                           onChange= {this.onChangeState}
+                          required
                         >
                           <option>Choose...</option>
                           <option>Telangana</option>
                         </Form.Control>
                         </Form.Group>
-                        <Form.Group controlId="formGridState">
+                        <Form.Group controlId="formGridCity">
                         <Form.Label>City</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
                           vlaue = {this.state.city}
                           onChange= {this.onChangeCity}
+                          required
                         >
                           <option>Choose...</option>
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      {/* <Form.Group controlId="formGridState">
                         <Form.Label>Date of Birth</Form.Label>
-                      </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      </Form.Group> */}
+                      <Form.Group controlId="formGridPreferredLocation">
                         <Form.Label>Preferred Location</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
                           value= {this.state.preferredlocation}
                           onChange= {this.onChangePreferredLocation}
+                          required
                         >
                           <option>Choose...</option>
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control 
                         className="form-control form-control-sm"
@@ -359,37 +349,40 @@ onNameChange(e) {
                         onChange= {this.onChangeAddress}
                         ></Form.Control>
                       </Form.Group>
-                     
-                    </div>
-                    <div className="col-sm-6">
-                    <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridRole">
                         <Form.Label>Role</Form.Label>
                         <Form.Control 
                          as="select"
                         className="form-control form-control-sm"
                         value = {this.state.role}
                         onChange= {this.onChangeRole}
+                        required
                         >
                            <option>Select</option>
                           <option>Software Developer</option>
                           <option>Quality Analyst</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridPrimarySkills">
                         <Form.Label>Primary skills</Form.Label>
                         <Form.Control className="form-control form-control-sm"
                         value= {this.state.primaryskills}
                         onChange= {this.onChangePrimarySkills}
+                        required
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridEmployer">
                         <Form.Label>Employer</Form.Label>
                         <Form.Control className="form-control form-control-sm"
                         value= {this.state.employer}
                         onChange= {this.onChangeEmployer}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                     
+                    </div>
+                    <div className="col-sm-6">
+                   
+                      <Form.Group controlId="formGridLinkedIn">
                         <Form.Label>LinkedIn Profile URL</Form.Label>
                         <Form.Control 
                         
@@ -398,23 +391,28 @@ onNameChange(e) {
                         onChange= {this.onChangeLinkedInUrl}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridSkypeId">
                         <Form.Label>Skype ID</Form.Label>
                         <Form.Control className="form-control form-control-sm"
                           value= {this.state.skypeid}
                           onChange= {this.onChangeSkypeID}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridStatus">
                         <Form.Label>Current Applicant Status </Form.Label>
                         <Form.Control 
                         as= "select"
                         className="form-control form-control-sm"
                         value= {this.state.status}
                         onChange= {this.onChangeStatus}
-                        ></Form.Control>
+                        required
+                        >
+                           <option>Select</option>
+                          <option>Available</option>
+                          <option>In Project</option>
+                        </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridRelocation">
                         <Form.Label>Relocation</Form.Label>
                        
                         <Form.Row>
@@ -428,11 +426,28 @@ onNameChange(e) {
                           </Col>
                         </Form.Row>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridTaxTerms">
                         <Form.Label>Tax terms </Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Control
+                         as = "select"
+                        className="form-control form-control-sm"
+                        value= {this.state.taxterms}
+                        onChange = {this.onChangeTaxterms}
+                        required
+                        >
+                          <option>Select</option>
+                           <option>1099</option>
+                          <option>C2C</option>
+                          <option>C2H</option>
+                          <option>Full Time</option>
+                          <option>Intern</option>
+                          <option>Part Time</option>
+                          <option>Seasonal</option>
+                          <option>W-2</option>
+                          <option>Other</option>
+                        </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridGender">
                         <Form.Label>Gender </Form.Label>
                         <Form.Row>
                           <Col>
@@ -445,33 +460,68 @@ onNameChange(e) {
                           </Col>
                         </Form.Row>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridSource">
                         <Form.Label>Source </Form.Label>
                         <Form.Control 
                         as = "select"
                         className="form-control form-control-sm"
                         value= {this.state.source}
                         onChange = {this.onChangeSource}
-                        ></Form.Control>
+                        required
+                        >
+                           <option>Select</option>
+                          <option>Dice</option>
+                          <option>Monster</option>
+                          <option>Career Builder</option>
+                          <option>LinkedIn</option>
+                          <option>Indeed</option>
+                          <option>Referral</option>
+                          <option>Other</option>
+
+                        </Form.Control>
                       </Form.Group>
-                      <div className="form-group">
+                      <Form.Label>Documents</Form.Label>
+                      <Form.Group> 
+                       
+                        <Form.Label>Resume</Form.Label>
+                      <div className="form-group" required>
+                            <input type="file" onChange={this.onFileChange} />
+                        </div>
+                        {/* <div className="form-group">
+                            <button className="btn btn-primary" >Upload</button>
+                        </div>   */}
+
+                        {/* <Form.Label>Education</Form.Label>    
+                        <div className="form-group">
                             <input type="file" onChange={this.onFileChange} />
                         </div>
                         <div className="form-group">
                             <button className="btn btn-primary" type="submit">Upload</button>
-                        </div>                    
+                        </div>    
+                        <Form.Label>Visa</Form.Label>    
+                        <div className="form-group">
+                            <input type="file" onChange={this.onFileChange} />
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="submit">Upload</button>
+                        </div>    */}
+                        </Form.Group>           
                           </div>
                   </div>
+                  <div className="form-group">
+                            <button className="btn btn-primary" type="submit" onSubmit={this.onSubmit}>Submit</button>
+                        </div>
                 </Form>
                 <div>
-                  <Button className="btn-primary" type="submit" id="submit" onClick = {this.onSubmit}>
-                    Save
-                  </Button>
-                  <div>
+                 
+                {/* <div className="form-group">
+                            <button className="btn btn-primary" type="submit">Submit</button>
+                        </div> */}
+                  {/* <div>
                     <Button className="btn-primary" type="submit" id="Reset">
                       Reset
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

@@ -10,6 +10,7 @@ import Container from "react-bootstrap/Container";
 import DatePicker from '../Components/Grid/DatePicker';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import UploadImage from './UploadImage';
+import SimpleReactValidator from 'simple-react-validator';
 
 
 
@@ -21,6 +22,8 @@ class EditApplication extends Component {
 
   constructor(props) {
     super(props);
+    this.validator = new SimpleReactValidator();
+
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeWorkPhoneNumber = this.onChangeWorkPhoneNumber.bind(this);
@@ -38,10 +41,10 @@ class EditApplication extends Component {
     this.onChangeTaxterms = this.onChangeTaxterms.bind(this);
     this.onChangeGender = this.onChangeGender.bind(this);
     this.onChangeSource = this.onChangeSource.bind(this);
-    this.onChangeResume = this.onChangeResume.bind(this);
     this.onChangeState = this.onChangeState.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
 
 
 
@@ -50,6 +53,7 @@ class EditApplication extends Component {
     this.state = {
       _id: 0,
       name: "",
+      profileImg: '',
       email: "",
       workphonenumber: "",
       homephonenumber: "",
@@ -97,7 +101,9 @@ class EditApplication extends Component {
         source: res.data.source,
         resume: res.data.resume,
         state: res.data.state,
-        city: res.data.city
+        city: res.data.city,
+        profileImg: res.data.profileImg
+
       });
      
     })
@@ -166,51 +172,47 @@ class EditApplication extends Component {
   onChangeSource(e) {
     this.setState({ source: e.target.value });
   }
-  onChangeResume(e) {
-    this.setState({ resume:  e.target.files[0],
-      loaded: 0,
-    });
-  }
+  
   onChangeState(e) {
     this.setState({ state: e.target.value });
   }
   onChangeCity(e) {
     this.setState({ city: e.target.value });
   }
-  onClickHandler = () => {
-    const data = new FormData() 
-    data.append('file', this.state.selectedFile)
-  
-}
+  onClickHandler(e) {
+
+    alert('File Uploaded')
+    }
+    onFileChange(e) {
+      this.setState({ profileImg: e.target.files[0] })
+  }
   onSubmit(e) {
     console.log(this.state._id)
     alert("User Updated");
     e.preventDefault();
-    const profileObject = {
-      _id:this.state._id,
-      name: this.state.name,
-      workphonenumber: this.state.workphonenumber,
-      homephonenumber: this.state.homephonenumber,
-      email: this.state.email,
-      workpermit: this.state.workpermit,
-      preferredlocation: this.state.preferredlocation,
-      state: this.state.state,
-      city: this.state.city,
-      address: this.state.address,
-      role: this.state.role,
-      primaryskills: this.state.primaryskills,
-      employer: this.state.employer,
-      linkedinurl: this.state.linkedinurl,
-      skypeid: this.state.skypeid,
-      status: this.state.status,
-      relocation: this.state.relocation,
-      taxterms: this.state.taxterms,
-      gender: this.state.gender,
-      source: this.state.source,
-      resume: this.state.resume
-    };
-
-    axios.post('http://localhost:5000/api/user/'+ this.state._id, profileObject)
+    const data = new FormData() 
+    data.append('profileImg', this.state.profileImg)
+    data.append('name', this.state.name)
+    data.append('email', this.state.email)
+    data.append('workphonenumber', this.state.workphonenumber)
+    data.append('homephonenumber', this.state.homephonenumber)
+    data.append('workpermit', this.state.workpermit)
+    data.append('preferredlocation', this.state.preferredlocation)
+    data.append('state', this.state.state)
+    data.append('city', this.state.city)
+    data.append('address', this.state.address)
+    data.append('role', this.state.role)
+    data.append('primaryskills', this.state.primaryskills)
+    data.append('employer', this.state.employer)
+    data.append('linkedinurl', this.state.linkedinurl)
+    data.append('skypeid', this.state.skypeid)
+    data.append('status', this.state.status)
+    data.append('relocation', this.state.relocation)
+    data.append('taxterms', this.state.taxterms)
+    data.append('gender', this.state.gender)
+    data.append('source', this.state.source)
+    data.append('dob', this.state.dob)
+    axios.post('http://localhost:5000/api/user/'+ this.state._id, data)
       .then((res) => {
         
         console.log('Profile successfully updated')
@@ -243,10 +245,9 @@ class EditApplication extends Component {
           <div class="form-group form-group-sm">
             <div class="row">
               <div className="col-sm-12">
-                <Form >
+              <Form>
                   <div class="row">
                     <div className="col-sm-6">
-                  
                       <Form.Group controlId="firstname">
                         <Form.Label>Applicant Name</Form.Label>
                         
@@ -256,8 +257,9 @@ class EditApplication extends Component {
                           value={this.state.name}
                           onChange={this.onChangeName}
                           className="form-control form-control-sm"
-                         
+                            required                         
                         />
+
                       </Form.Group>
                     
                   
@@ -267,6 +269,7 @@ class EditApplication extends Component {
                           value={this.state.workphonenumber}
                           onChange={this.onChangeWorkPhoneNumber}
                           className="form-control form-control-sm"
+                          required
                         />
                       </Form.Group>
                       <Form.Group controlId="homenumber">
@@ -275,6 +278,7 @@ class EditApplication extends Component {
                           value={this.state.homephonenumber}
                           onChange={this.onChangeHomePhoneNumber}
                           className="form-control form-control-sm"
+                          required
                         />
                       </Form.Group>
                       <Form.Group controlId="formGridAddress1">
@@ -285,20 +289,44 @@ class EditApplication extends Component {
                           onChange={this.onChangeEmail}
                           placeholder="abc@gmail.com"
                           className="form-control form-control-sm"
+                          required
                         />
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      {/* <Form.Group>
+                      <div className="form-group">
+            <label> Date of Birth</label>
+            <DatePicker
+              selected={ this.state.dob }
+              onChange={ this.onChangeDOB }
+              name="startDate"
+              dateFormat="MM/DD/YYYY"
+            />
+          </div>
+                      </Form.Group> */}
+                      <Form.Group controlId="formGridWorkPermit">
                         <Form.Label>Work Permit</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
                           value={this.state.workpermit}
-                          onChange={this.onChangeWorkPermit}>
-                          <option></option>
-                          <option>H1</option>
+                          onChange={this.onChangeWorkPermit}
+                          required>
+
+                          <option>Select</option>
+                          <option>H1-B</option>
+                          <option>B1</option>
+                          <option>Citizen</option>
+                          <option>GC</option>
+                          <option>GC-EAD</option>
+                          <option>L1-A</option>
+                          <option>L1-B</option>
+                          <option>L2-EAD</option>
+                          <option>OPT-EAD</option>
+                          <option>TN Visa</option>
+
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridCurrentLocation">
                         <Form.Label>Current Location</Form.Label>
                      
                       <Form.Group controlId="formGridState">
@@ -308,40 +336,43 @@ class EditApplication extends Component {
                           className="form-control form-control-sm"
                           value={this.state.state}
                           onChange= {this.onChangeState}
+                          required
                         >
                           <option>Choose...</option>
                           <option>Telangana</option>
                         </Form.Control>
                         </Form.Group>
-                        <Form.Group controlId="formGridState">
+                        <Form.Group controlId="formGridCity">
                         <Form.Label>City</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
                           vlaue = {this.state.city}
                           onChange= {this.onChangeCity}
+                          required
                         >
                           <option>Choose...</option>
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      {/* <Form.Group controlId="formGridState">
                         <Form.Label>Date of Birth</Form.Label>
-                      </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      </Form.Group> */}
+                      <Form.Group controlId="formGridPreferredLocation">
                         <Form.Label>Preferred Location</Form.Label>
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
                           value= {this.state.preferredlocation}
                           onChange= {this.onChangePreferredLocation}
+                          required
                         >
                           <option>Choose...</option>
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control 
                         className="form-control form-control-sm"
@@ -349,37 +380,40 @@ class EditApplication extends Component {
                         onChange= {this.onChangeAddress}
                         ></Form.Control>
                       </Form.Group>
-                     
-                    </div>
-                    <div className="col-sm-6">
-                    <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridRole">
                         <Form.Label>Role</Form.Label>
                         <Form.Control 
                          as="select"
                         className="form-control form-control-sm"
                         value = {this.state.role}
                         onChange= {this.onChangeRole}
+                        required
                         >
                            <option>Select</option>
                           <option>Software Developer</option>
                           <option>Quality Analyst</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridPrimarySkills">
                         <Form.Label>Primary skills</Form.Label>
                         <Form.Control className="form-control form-control-sm"
                         value= {this.state.primaryskills}
                         onChange= {this.onChangePrimarySkills}
+                        required
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridEmployer">
                         <Form.Label>Employer</Form.Label>
                         <Form.Control className="form-control form-control-sm"
                         value= {this.state.employer}
                         onChange= {this.onChangeEmployer}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                     
+                    </div>
+                    <div className="col-sm-6">
+                   
+                      <Form.Group controlId="formGridLinkedIn">
                         <Form.Label>LinkedIn Profile URL</Form.Label>
                         <Form.Control 
                         
@@ -388,23 +422,28 @@ class EditApplication extends Component {
                         onChange= {this.onChangeLinkedInUrl}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridSkypeId">
                         <Form.Label>Skype ID</Form.Label>
                         <Form.Control className="form-control form-control-sm"
                           value= {this.state.skypeid}
                           onChange= {this.onChangeSkypeID}
                         ></Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridStatus">
                         <Form.Label>Current Applicant Status </Form.Label>
                         <Form.Control 
                         as= "select"
                         className="form-control form-control-sm"
                         value= {this.state.status}
                         onChange= {this.onChangeStatus}
-                        ></Form.Control>
+                        required
+                        >
+                           <option>Select</option>
+                          <option>Available</option>
+                          <option>In Project</option>
+                        </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridRelocation">
                         <Form.Label>Relocation</Form.Label>
                        
                         <Form.Row>
@@ -418,11 +457,28 @@ class EditApplication extends Component {
                           </Col>
                         </Form.Row>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridTaxTerms">
                         <Form.Label>Tax terms </Form.Label>
-                        <Form.Control className="form-control form-control-sm"></Form.Control>
+                        <Form.Control
+                         as = "select"
+                        className="form-control form-control-sm"
+                        value= {this.state.taxterms}
+                        onChange = {this.onChangeTaxterms}
+                        required
+                        >
+                          <option>Select</option>
+                           <option>1099</option>
+                          <option>C2C</option>
+                          <option>C2H</option>
+                          <option>Full Time</option>
+                          <option>Intern</option>
+                          <option>Part Time</option>
+                          <option>Seasonal</option>
+                          <option>W-2</option>
+                          <option>Other</option>
+                        </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridGender">
                         <Form.Label>Gender </Form.Label>
                         <Form.Row>
                           <Col>
@@ -435,22 +491,55 @@ class EditApplication extends Component {
                           </Col>
                         </Form.Row>
                       </Form.Group>
-                      <Form.Group controlId="formGridState">
+                      <Form.Group controlId="formGridSource">
                         <Form.Label>Source </Form.Label>
                         <Form.Control 
                         as = "select"
                         className="form-control form-control-sm"
                         value= {this.state.source}
                         onChange = {this.onChangeSource}
-                        ></Form.Control>
+                        required
+                        >
+                           <option>Select</option>
+                          <option>Dice</option>
+                          <option>Monster</option>
+                          <option>Career Builder</option>
+                          <option>LinkedIn</option>
+                          <option>Indeed</option>
+                          <option>Referral</option>
+                          <option>Other</option>
+
+                        </Form.Control>
                       </Form.Group>
-                      <div className="form-group">
+                      <Form.Label>Documents</Form.Label>
+                      <Form.Group> 
+                       
+                        <Form.Label>Resume</Form.Label>
+                      <div className="form-group" required>
+                            <input type="file" onChange={this.onFileChange} />
+                        </div>
+                        {/* <div className="form-group">
+                            <button className="btn btn-primary" >Upload</button>
+                        </div>   */}
+
+                        {/* <Form.Label>Education</Form.Label>    
+                        <div className="form-group">
                             <input type="file" onChange={this.onFileChange} />
                         </div>
                         <div className="form-group">
                             <button className="btn btn-primary" type="submit">Upload</button>
-                        </div>                       </div>
+                        </div>    
+                        <Form.Label>Visa</Form.Label>    
+                        <div className="form-group">
+                            <input type="file" onChange={this.onFileChange} />
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-primary" type="submit">Upload</button>
+                        </div>    */}
+                        </Form.Group>           
+                          </div>
                   </div>
+                 
                 </Form>
                 <div>
                 <Button variant="danger" size="lg" block="block" type="submit" onClick={this.onSubmit}>

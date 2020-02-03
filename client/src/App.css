@@ -33,7 +33,9 @@
 .back {
   flex-direction: row;
 }
-
+.navbar1 {
+justify-content: right;
+}
 
 #submit{
   color :white;
