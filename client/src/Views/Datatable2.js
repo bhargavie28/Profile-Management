@@ -6,7 +6,7 @@ class Datatable2 extends Component {
   constructor(props) {
     super(props);
  
-    this.setNewValue = this.setNewValue.bind(this);
+this.setNewValue = this.setNewValue.bind(this);
   }
  
   setNewValue(newValue) {

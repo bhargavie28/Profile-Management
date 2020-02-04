@@ -1,22 +1,20 @@
 import React, { Component, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Nav } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-date-picker';
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Spinner from './Spinner';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import {NavLink, Redirect} from 'react-router-dom';
-import UploadImage from './UploadImage';
 import SimpleReactValidator from 'simple-react-validator';
-import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import "../App.css";
 import { Divider } from "@material-ui/core";
 import ProfileList from "./ProfileList";
+import SelectUSState from 'react-select-us-states';
+
 class Form1 extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +57,7 @@ class Form1 extends Component {
       city: '',
       address:'',
       role: "",
-      primaryskills: [''],
+      primaryskills: [],
       employer: "",
       linkedinurl: "",
       skypeid: "",
@@ -69,7 +67,7 @@ class Form1 extends Component {
       gender: "",
       source: "",
       profileImg: "",
-      dob: moment(),
+      dob: new Date(),
       isLoading: false
     };
   }
@@ -116,6 +114,8 @@ class Form1 extends Component {
   }
   onChangeStatus(e) {
     this.setState({ status: e.target.value });
+    this.setState(Date.now)
+    console.log(Date.now)
   }
   onChangeRelocation(e) {
     e.preventDefault();
@@ -136,8 +136,12 @@ class Form1 extends Component {
     this.setState({ resume:  e.target.files[0],
     });
   }
-  onChangeState(e) {
-    this.setState({ state: e.target.value });
+  // onChangeState(e) {
+  //   this.setState({ state: e.target.value });
+  // }
+
+  onChangeState(newValue) {
+    console.log('this is the State code:' + newValue);
   }
   onChangeCity(e) {
     this.setState({ city: e.target.value });
@@ -146,10 +150,8 @@ class Form1 extends Component {
     this.setState({ profileImg: e.target.files[0] })
 }
 
-onChangeDOB(date) {
-  this.setState({
-    dob: date
-  })
+onChangeDOB(dob) {
+  this.setState({ dob });
 }
 onNameChange(e) {
     this.setState({ name: e.target.value })
@@ -300,28 +302,24 @@ alert('File Uploaded')
                      
                       <Form.Group controlId="formGridState">
                         <Form.Label>State</Form.Label>
-                        <Form.Control
-                          as="select"
+                        <SelectUSState
+                         
                           className="form-control form-control-sm"
-                          value={this.state.state}
                           onChange= {this.onChangeState}
                           required
-                        >
-                          <option>Choose...</option>
-                          <option>Telangana</option>
-                        </Form.Control>
+                        />
+                        
                         </Form.Group>
                         <Form.Group controlId="formGridCity">
                         <Form.Label>City</Form.Label>
                         <Form.Control
-                          as="select"
+                          type = "text"
                           className="form-control form-control-sm"
                           vlaue = {this.state.city}
                           onChange= {this.onChangeCity}
                           required
                         >
-                          <option>Choose...</option>
-                          <option>Hyderabad</option>
+                          
                         </Form.Control>
                       </Form.Group>
                       </Form.Group>
@@ -341,6 +339,12 @@ alert('File Uploaded')
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
+                    <div> Date of Birth
+                        <DatePicker
+          onChange={this.onChangeDOB}
+          value={this.state.dob}
+        />
+        </div>
                       <Form.Group controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control 
@@ -365,11 +369,8 @@ alert('File Uploaded')
                       </Form.Group>
                       <Form.Group controlId="formGridPrimarySkills">
                         <Form.Label>Primary skills</Form.Label>
-                        <Form.Control className="form-control form-control-sm"
-                        value= {this.state.primaryskills}
-                        onChange= {this.onChangePrimarySkills}
-                        required
-                        ></Form.Control>
+                       
+                    
                       </Form.Group>
                       <Form.Group controlId="formGridEmployer">
                         <Form.Label>Employer</Form.Label>

@@ -7,10 +7,11 @@ import Col from "react-bootstrap/Col";
 
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import DatePicker from '../Components/Grid/DatePicker';
+import DatePicker from 'react-date-picker';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import UploadImage from './UploadImage';
 import SimpleReactValidator from 'simple-react-validator';
+import SelectUSState from 'react-select-us-states';
 
 
 
@@ -45,6 +46,7 @@ class EditApplication extends Component {
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
     this.onFileChange = this.onFileChange.bind(this);
+    this.onChangeDOB = this.onChangeDOB.bind(this);
 
 
 
@@ -73,6 +75,7 @@ class EditApplication extends Component {
       gender: "",
       source: "",
       resume: "",
+      dob: new Date()
     };
   }
   componentDidMount(){
@@ -83,6 +86,7 @@ class EditApplication extends Component {
       this.setState({
         _id:id,
         name: res.data.name,
+        dob: res.data.dob,
         email: res.data.email,
         workphonenumber: res.data.workphonenumber,
         homephonenumber: res.data.homephonenumber,
@@ -173,8 +177,15 @@ class EditApplication extends Component {
     this.setState({ source: e.target.value });
   }
   
+  // onChangeState(e) {
+  //   this.setState({ state: e.target.value });
+  // }
   onChangeState(e) {
-    this.setState({ state: e.target.value });
+    this.setState({state: e.target.value});
+    console.log('this is the State code:' );
+  }
+  onChangeDOB(dob) {
+    this.setState({ dob });
   }
   onChangeCity(e) {
     this.setState({ city: e.target.value });
@@ -328,20 +339,15 @@ class EditApplication extends Component {
                       </Form.Group>
                       <Form.Group controlId="formGridCurrentLocation">
                         <Form.Label>Current Location</Form.Label>
-                     
-                      <Form.Group controlId="formGridState">
-                        <Form.Label>State</Form.Label>
-                        <Form.Control
-                          as="select"
-                          className="form-control form-control-sm"
-                          value={this.state.state}
-                          onChange= {this.onChangeState}
-                          required
-                        >
-                          <option>Choose...</option>
-                          <option>Telangana</option>
-                        </Form.Control>
-                        </Form.Group>
+                        
+                        <div>State
+                      
+                        <SelectUSState 
+                        selected= {this.state.state}
+                        onChange= {this.onChangeState}
+                        />
+                        </div>
+                        
                         <Form.Group controlId="formGridCity">
                         <Form.Label>City</Form.Label>
                         <Form.Control
@@ -372,6 +378,12 @@ class EditApplication extends Component {
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
+                      <div> Date of Birth
+                        <DatePicker
+          onChange={this.onChangeDOB}
+          value={this.state.dob}
+        />
+        </div>
                       <Form.Group controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control 

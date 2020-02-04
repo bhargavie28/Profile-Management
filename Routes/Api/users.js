@@ -92,7 +92,7 @@ router.post(
       workphonenumber,
       homephonenumber,
       workpermit,
-      dob,
+      dob: Date(),
       preferredlocation,
       address,
       role,
