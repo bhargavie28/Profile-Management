@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
     constructor(props) {
         super(props);
         this.deleteProfile = this.deleteProfile.bind(this);
+
     }
 
     deleteProfile() {
@@ -23,8 +24,11 @@ import Button from 'react-bootstrap/Button';
             })
     }
     render() {
+       
         return (
+            
             <tr> 
+                <td>{Math.round}</td>
                 <td>{this.props.obj.name}</td>  
                 <td>{this.props.obj.homephonenumber}</td>
                 <td>{this.props.obj.email}</td>
@@ -35,6 +39,7 @@ import Button from 'react-bootstrap/Button';
                 </td>
                 <td>{this.props.obj.primaryskills}</td>
                 <td>
+                    
              <Link to={"/editProfile/" + this.props.obj._id}>Edit</Link>
              
 

@@ -43,7 +43,7 @@ class ProfileList extends Component
           <Table striped bordered hover>
             <thead>
               <tr>
-               
+                <th>ID</th>
                 <th>Applicant Name</th>
                 <th>Mobile Number</th>
                 <th>Email</th>

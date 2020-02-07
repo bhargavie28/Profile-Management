@@ -72,8 +72,10 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+   
 
-    const { name, email, workphonenumber, homephonenumber,workpermit, dob,preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume, city, state, primaryskills, profileImg} = req.body;
+
+    const {name, email, workphonenumber, homephonenumber,workpermit, dob,preferredlocation,address, role,employer, linkedinurl, skypeid, status, relocation, taxterms,gender, source, resume, city, state, primaryskills, profileImg} = req.body;
     try {
       let user = await User.findOne({ email });
       
@@ -84,15 +86,17 @@ router.post(
           .json({ errors: [{ msg: 'User already exists' }] });
       }
 
+  
  
       user = new User({
+        
         _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
       email: req.body.email,
       workphonenumber,
       homephonenumber,
       workpermit,
-      dob: Date(),
+      dob,
       preferredlocation,
       address,
       role,
@@ -113,6 +117,7 @@ router.post(
       console.log(user);
       const profileObject = {};
     profileObject.user = req.user?req.user.id:'';
+
     // if (name) profileFields.name = name;
     // if (email) profileFields.email = email;
     // if (workphonenumber) profileFields.workphonenumber = workphonenumber;

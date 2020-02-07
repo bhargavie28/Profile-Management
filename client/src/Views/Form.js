@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
-import DatePicker from 'react-date-picker';
+import DatePicker from 'react-datepicker';
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Spinner from './Spinner';
@@ -14,6 +14,10 @@ import "../App.css";
 import { Divider } from "@material-ui/core";
 import ProfileList from "./ProfileList";
 import SelectUSState from 'react-select-us-states';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 class Form1 extends Component {
   constructor(props) {
@@ -67,7 +71,7 @@ class Form1 extends Component {
       gender: "",
       source: "",
       profileImg: "",
-      dob: new Date(),
+      dob: '',
       isLoading: false
     };
   }
@@ -149,9 +153,8 @@ class Form1 extends Component {
   onFileChange(e) {
     this.setState({ profileImg: e.target.files[0] })
 }
-
-onChangeDOB(dob) {
-  this.setState({ dob });
+onChangeDOB(e) {
+  this.setState({dob: e.target.value})
 }
 onNameChange(e) {
     this.setState({ name: e.target.value })
@@ -166,7 +169,6 @@ alert('File Uploaded')
   onSubmit(e) {
     alert("User Saved");
     e.preventDefault();
-   
     const data = new FormData() 
     data.append('profileImg', this.state.profileImg)
     data.append('name', this.state.name)
@@ -263,17 +265,7 @@ alert('File Uploaded')
                           required
                         />
                       </Form.Group>
-                      {/* <Form.Group>
-                      <div className="form-group">
-            <label> Date of Birth</label>
-            <DatePicker
-              selected={ this.state.dob }
-              onChange={ this.onChangeDOB }
-              name="startDate"
-              dateFormat="MM/DD/YYYY"
-            />
-          </div>
-                      </Form.Group> */}
+             
                       <Form.Group controlId="formGridWorkPermit">
                         <Form.Label>Work Permit</Form.Label>
                         <Form.Control
@@ -339,12 +331,14 @@ alert('File Uploaded')
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
-                    <div> Date of Birth
-                        <DatePicker
-          onChange={this.onChangeDOB}
-          value={this.state.dob}
-        />
-        </div>
+                      <Form.Group controlId="formGriddob">
+                        <Form.Label>Date of Birth</Form.Label>
+                        <Form.Control 
+                        className="form-control form-control-sm"
+                        value= {this.state.dob}
+                        onChange= {this.onChangeDOB}
+                        ></Form.Control>
+                      </Form.Group>
                       <Form.Group controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control 

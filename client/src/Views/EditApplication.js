@@ -75,7 +75,7 @@ class EditApplication extends Component {
       gender: "",
       source: "",
       resume: "",
-      dob: new Date()
+      dob: ''
     };
   }
   componentDidMount(){
@@ -184,8 +184,8 @@ class EditApplication extends Component {
     this.setState({state: e.target.value});
     console.log('this is the State code:' );
   }
-  onChangeDOB(dob) {
-    this.setState({ dob });
+  onChangeDOB(e) {
+    this.setState({ dob : e.target.value});
   }
   onChangeCity(e) {
     this.setState({ city: e.target.value });
@@ -303,17 +303,7 @@ class EditApplication extends Component {
                           required
                         />
                       </Form.Group>
-                      {/* <Form.Group>
-                      <div className="form-group">
-            <label> Date of Birth</label>
-            <DatePicker
-              selected={ this.state.dob }
-              onChange={ this.onChangeDOB }
-              name="startDate"
-              dateFormat="MM/DD/YYYY"
-            />
-          </div>
-                      </Form.Group> */}
+           
                       <Form.Group controlId="formGridWorkPermit">
                         <Form.Label>Work Permit</Form.Label>
                         <Form.Control
@@ -378,12 +368,14 @@ class EditApplication extends Component {
                           <option>Hyderabad</option>
                         </Form.Control>
                       </Form.Group>
-                      <div> Date of Birth
-                        <DatePicker
-          onChange={this.onChangeDOB}
-          value={this.state.dob}
-        />
-        </div>
+                     <Form.Group>
+                     <Form.Label>Date of Birth</Form.Label>
+                        <Form.Control 
+                        className="form-control form-control-sm"
+                        value= {this.state.dob}
+                        onChange= {this.onChangeDOB}
+                        ></Form.Control>
+                     </Form.Group>
                       <Form.Group controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
                         <Form.Control 
