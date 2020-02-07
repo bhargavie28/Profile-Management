@@ -34,6 +34,7 @@ class Form1 extends Component {
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeRole = this.onChangeRole.bind(this);
     this.onChangePrimarySkills = this.onChangePrimarySkills.bind(this);
+    this.onChangeRating = this.onChangeRating.bind(this);
     this.onChangeEmployer = this.onChangeEmployer.bind(this);
     this.onChangeLinkedInUrl = this.onChangeLinkedInUrl.bind(this);
     this.onChangeSkypeID = this.onChangeSkypeID.bind(this);
@@ -62,6 +63,7 @@ class Form1 extends Component {
       address:'',
       role: "",
       primaryskills: [],
+      rating:'',
       employer: "",
       linkedinurl: "",
       skypeid: "",
@@ -106,6 +108,10 @@ class Form1 extends Component {
   onChangePrimarySkills(e) {
     console.log(e.target.value);
     this.setState({ primaryskills: e.target.value });
+  }
+  onChangeRating(e) {
+   
+    this.setState({ rating: e.target.value });
   }
   onChangeEmployer(e) {
     this.setState({ employer: e.target.value });
@@ -182,6 +188,7 @@ alert('File Uploaded')
     data.append('address', this.state.address)
     data.append('role', this.state.role)
     data.append('primaryskills', this.state.primaryskills)
+    data.append('rating', this.state.rating)
     data.append('employer', this.state.employer)
     data.append('linkedinurl', this.state.linkedinurl)
     data.append('skypeid', this.state.skypeid)
@@ -362,9 +369,30 @@ alert('File Uploaded')
                         </Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridPrimarySkills">
-                        <Form.Label>Primary skills</Form.Label>
+                        <Form.Label>SkillSet</Form.Label>
                        
-                    
+                        <Form.Row>
+                          <Col>
+                          <Form.Label>Primary Skills</Form.Label>
+                           <Form.Control 
+                           className="form-control form-control-sm"
+                           value= {this.state.primaryskills}
+                           onChange= {this.onChangePrimarySkills}
+                           required
+                           ></Form.Control>
+                          </Col>
+                          <Col>
+                          <Form.Label>Rating</Form.Label>
+                          <Form.Control 
+                           className="form-control form-control-sm"
+                           controlId="formGridRating"
+                           value= {this.state.rating}
+                           onChange= {this.onChangeRating}
+                           placeholder= "on a scale of 5"
+                           required
+                           ></Form.Control>
+                          </Col>
+                        </Form.Row>
                       </Form.Group>
                       <Form.Group controlId="formGridEmployer">
                         <Form.Label>Employer</Form.Label>
@@ -482,24 +510,16 @@ alert('File Uploaded')
                       <div className="form-group" required>
                             <input type="file" onChange={this.onFileChange} />
                         </div>
-                        {/* <div className="form-group">
-                            <button className="btn btn-primary" >Upload</button>
-                        </div>   */}
 
-                        {/* <Form.Label>Education</Form.Label>    
+                         <Form.Label>Education</Form.Label>    
                         <div className="form-group">
                             <input type="file" onChange={this.onFileChange} />
                         </div>
-                        <div className="form-group">
-                            <button className="btn btn-primary" type="submit">Upload</button>
-                        </div>    
                         <Form.Label>Visa</Form.Label>    
                         <div className="form-group">
                             <input type="file" onChange={this.onFileChange} />
                         </div>
-                        <div className="form-group">
-                            <button className="btn btn-primary" type="submit">Upload</button>
-                        </div>    */}
+                          
                         </Form.Group>           
                           </div>
                   </div>
