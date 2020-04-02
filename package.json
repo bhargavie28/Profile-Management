@@ -23,14 +23,29 @@
     "react-dnd-html5-backend": "^3.0.2",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.2.2",
-    "react-scripts": "^3.3.0",
+    "react-scripts": "3.4.1",
     "react-select-us-states": "^0.1.2",
     "react-tag-input": "^6.4.2",
     "react-tagsinput": "^3.19.0",
+    "read-excel-file": "^4.0.6",
     "request": "^2.88.0",
-    "simple-react-validator": "^1.4.4"
+    "simple-react-validator": "^1.4.4",
+    "textract": "^2.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-onepass": "^2.1.6",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "prettier": "^1.19.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",

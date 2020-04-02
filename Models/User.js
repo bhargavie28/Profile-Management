@@ -1,81 +1,76 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   profileImg: {
-      type: String
+    type: String
   },
 
   name: {
-    type: String,
-    required: true
+    type: String
   },
-  
+
   email: {
-    type: String,
-    unique: true
+    type: String
   },
   workphonenumber: {
-    type: Number,
-    required: true
+    type: Number
   },
   homephonenumber: {
-    type: Number,
-    required: true
+    type: Number
   },
   workpermit: {
-    type: String,
-    
+    type: String
   },
   dob: {
-    type: String,
+    type: String
   },
   preferredlocation: {
-    type: String,
+    type: String
   },
   address: {
-    type: String,
+    type: String
   },
   role: {
-    type: String,
+    type: String
   },
   employer: {
-    type: String,
+    type: String
   },
   linkedinurl: {
-    type: String,
+    type: String
   },
   skypeid: {
-    type: String,
+    type: String
   },
   status: {
-    type: String,
+    type: String
   },
   relocation: {
-    type: String,
+    type: String
   },
   taxterms: {
-    type: String,
+    type: String
   },
   gender: {
-    type: String,
+    type: String
   },
 
   source: {
-    type: String,
+    type: String
   },
   resume: {
-    type: String,
+    type: String
   },
   city: {
-    type: String,
+    type: String
   },
   state: {
-    type: String,
+    type: String
   },
   primaryskills: {
-    type: [String],
+    type: [String]
   }
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model("user", UserSchema);

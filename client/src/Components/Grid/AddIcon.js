@@ -30,9 +30,9 @@ export default function FloatingActionButtons() {
 
        
       </Fab>
-      <Fab color="secondary" aria-label="edit">
+      {/* <Fab color="secondary" aria-label="edit">
         <EditIcon />
-      </Fab>
+      </Fab> */}
      
     </div>
   );

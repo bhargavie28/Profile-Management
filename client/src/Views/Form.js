@@ -17,6 +17,10 @@ import SelectUSState from 'react-select-us-states';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import {success, error} from './Alert';
+
+
 
 
 class Form1 extends Component {
@@ -74,7 +78,9 @@ class Form1 extends Component {
       source: "",
       profileImg: "",
       dob: '',
-      isLoading: false
+      isLoading: false,
+      success: false,
+      error: false
     };
   }
 
@@ -202,10 +208,7 @@ alert('File Uploaded')
 
     axios
       .post(`http://localhost:5000/api/user`, data)
-      .then(res =>  <Redirect to='/profilelist' />);
-    
-
-    
+      .then(res=>{console.log(res)})
   }
  
 

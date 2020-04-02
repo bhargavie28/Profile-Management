@@ -8,14 +8,17 @@ import SignIn from './Components/auth/SignIn';
 import CreateJobPost from './Components/jobposting/CreateJobPost';
 import JobPostList from './Components/jobposting/JobPostList';
 import EditApplication from './Views/EditApplication';
+import TestTable from './Views/TestTable'
 
-function App() {
+
+export default function App() {
   return (
     <BrowserRouter>
     <div className="App">
       <Navbar1 />
       <Switch>
          <Route exact path='/' component={Dashboard} />
+         <Route path='/table' component={TestTable} />
          <Route path='/signin' component={SignIn} />
          <Route path= '/form' component= {Form1} />
          <Route path= '/editProfile' component= {EditApplication} />
@@ -28,4 +31,3 @@ function App() {
     </BrowserRouter>
   );
 }
-export default App;

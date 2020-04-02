@@ -4,7 +4,7 @@ import TagInput from '../../Views/Date';
 class Dashboard extends Component{
     render(){
         return(
-
+            
     <TagInput />
         )
     }
