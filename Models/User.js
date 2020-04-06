@@ -70,6 +70,9 @@ const UserSchema = new mongoose.Schema({
   },
   primaryskills: {
     type: [String]
+  },
+  text : {
+    type: String
   }
 });
 

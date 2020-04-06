@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import ProfileList from './ProfileList';
 
 
 
@@ -16,7 +17,8 @@ import Button from 'react-bootstrap/Button';
         axios.delete('http://localhost:5000/api/user/' + this.props.obj._id)
             .then((res) => {
                 console.log('Profile successfully deleted!')
-                alert('Profile successfully deleted!')
+                this.props.history.push('/profilelist')
+                
                 
             }).catch((error) => {
                 console.log(error)

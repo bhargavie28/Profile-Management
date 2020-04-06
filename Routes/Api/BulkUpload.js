@@ -25,6 +25,5 @@ const schema = {
  const data =  readXlsxFile(file, { schema }).then(({ rows, errors }) => {
     errors.length === 0
     console.log('NEwRows', rows)
-    const{name,email,workpermit} = rows;
   })
 

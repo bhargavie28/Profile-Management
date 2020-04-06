@@ -18,7 +18,12 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {success, error} from './Alert';
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+
 
 
 
@@ -179,7 +184,6 @@ alert('File Uploaded')
   
   
   onSubmit(e) {
-    alert("User Saved");
     e.preventDefault();
     const data = new FormData() 
     data.append('profileImg', this.state.profileImg)
@@ -204,12 +208,21 @@ alert('File Uploaded')
     data.append('gender', this.state.gender)
     data.append('source', this.state.source)
     data.append('dob', this.state.dob)
-
-
     axios
       .post(`http://localhost:5000/api/user`, data)
-      .then(res=>{console.log(res)})
+      .then(this.onSuccess())
+      .catch(error => {console.log(error)})
   }
+onSuccess(){
+  console.log('INSUCCEss')
+  this.props.history.push('/success')
+}
+onFailure(){
+  console.log('INSUCCEss')
+  this.props.history.push('/error')
+}
+
+
  
 
   render() {
@@ -218,7 +231,7 @@ alert('File Uploaded')
       
      ( <Container>
         <Fragment  className= "back">
-        <NavLink to = "/profilelist"><KeyboardBackspaceIcon /></NavLink>
+        <NavLink to = "/table"><KeyboardBackspaceIcon /></NavLink>
           <h3 className="color">Personal Details</h3>
           <Divider />
         
@@ -529,6 +542,8 @@ alert('File Uploaded')
                   <div className="form-group">
                             <button className="btn btn-primary" type="submit" onSubmit={this.onSubmit}>Submit</button>
                         </div>
+  
+                  
                 </Form>
                 <div>
                  
