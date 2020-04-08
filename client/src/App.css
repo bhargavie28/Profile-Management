@@ -30,6 +30,10 @@
   width: 50;
   
 }
+.form-group {
+ justify-content: center;
+  
+}
 .back {
   flex-direction: row;
 }
@@ -92,6 +96,9 @@ justify-content: right;
   color: #008793;
 }
 
+
+
+
 .MuiSvgIcon-root{
   color:cadetblue !important;
   width: 50px !important;
@@ -113,6 +120,8 @@ justify-content: right;
 .container {
  font-size: small;
  text-align: left;
+margin-bottom: 10;
+ height: 10;
 }
 
 .profile {

@@ -12,6 +12,11 @@ import TestTable from './Views/TestTable';
 import Success from './Components/Alerts/Success';
 import Error from './Components/Alerts/Error';
 import Uploadfile from './Views/Uploadfile';
+import View from './Views/View';
+import UploadResume from './Views/UploadResume';
+import ResumeTable from './Views/ResumeTable';
+
+
 
 
 
@@ -25,6 +30,12 @@ export default function App() {
          <Route exact path='/success' component={Success} />
          <Route exact path='/error' component={Error} />
          <Route exact path='/uploadfile' component={Uploadfile} />
+         <Route exact path='/uploadResume' component={UploadResume} />
+         <Route exact path='/resumetable' component={ResumeTable} />
+
+
+         <Route exact path='/view' component={View} />
+
 
 
          <Route path='/table' component={TestTable} />

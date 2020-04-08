@@ -5,7 +5,7 @@ import Spinner from "./Spinner";
 
 
 
-export default class Uploadfile extends Component {
+export default class UploadResume extends Component {
     constructor(props) {
         super(props);
         this.onFileChange = this.onFileChange.bind(this);
@@ -36,7 +36,7 @@ export default class Uploadfile extends Component {
             .catch((error) => {
               console.log(error);
             });
-            this.props.history.push('/table')
+            this.props.history.push('/resumetable')
         
         }
             console.log('entered')
@@ -46,11 +46,28 @@ export default class Uploadfile extends Component {
             console.log("DATA1",data)
 
             axios
-      .post(`http://localhost:5000/api/user/bulkupload`, data)
+      .post(`http://localhost:5000/api/user/fileupload`, data)
       .then(onSuccess)
       .catch(error => {console.log(error)})
      
         }
+        onSucces(){
+            axios
+            .get("http://localhost:5000/api/user/")
+            .then((res) => {
+              console.log('Data',res.data);
+              this.setState({
+                profiles: res.data,
+                loading: false,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+            this.props.history.push('/resumetable')
+        
+        }
+        
 
 
 render(){
@@ -59,7 +76,7 @@ render(){
         <Form onSubmit= {this.onSubmit}>
          
              <div>
-<Form.Label><h5>Upload File </h5></Form.Label>
+<Form.Label><h5>Upload Resume </h5></Form.Label>
                       <div className="form-group" required>
                             <input type="file" onChange={this.onFileChange} />
                         </div>

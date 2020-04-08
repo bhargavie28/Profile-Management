@@ -232,14 +232,8 @@ class EditApplication extends Component {
       })
 
     // Redirect to Student List 
-    this.props.history.push('/profilelist')
+    this.props.history.push('/table')
   }
-    
-
-
-
- 
-  
 
   render() {
     
@@ -247,7 +241,7 @@ class EditApplication extends Component {
       
       <Container>
         <Fragment className= "back" >
-        <NavLink to = "/profilelist"><KeyboardBackspaceIcon /></NavLink>
+        <NavLink to = "/table"><KeyboardBackspaceIcon /></NavLink>
           <h3 className="color">Personal Details</h3>
           <Divider />
         </Fragment>

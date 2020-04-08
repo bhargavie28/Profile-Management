@@ -88,17 +88,27 @@ export default function Dashboard() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Post Job
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Link to ={`/uploadfile`}>
-                  <Button variant="outlined" color="primary">
-                   Upload File
+                                <Link to={`/form`}>
+                  <Button variant="contained" color="primary">
+                   Add Profile
                   </Button>
                   </Link>
                 </Grid>
+                <Grid item>
+                                <Link to={`/uploadfile`}>
+                  <Button variant="contained" color="primary">
+                  Upload Profiles
+                  </Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                                <Link to={`/uploadResume`}>
+                  <Button variant="contained" color="primary">
+                  Upload Resume
+                  </Button>
+                  </Link>
+                </Grid>
+               
               </Grid>
             </div>
           </Container>

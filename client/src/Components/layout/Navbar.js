@@ -3,6 +3,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import SignedInLinks from '../layout/SignedInLinks';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
+import SearchIcon from '@material-ui/icons/Search';
+
 
 
 class Navbar1 extends Component {

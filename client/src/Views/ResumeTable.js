@@ -12,10 +12,9 @@ import Spinner from "./Spinner";
 
 
 
-export default class TestTable extends React.Component {
+export default class ResumeTable extends React.Component {
   constructor(props) {
     super(props);
-    this.deleteProfile = this.deleteProfile.bind(this);
 
     this.state = {
       profiles: [],
@@ -25,27 +24,9 @@ export default class TestTable extends React.Component {
 
     };
   }
-  // onFilteredChangeCustom = (value, accessor) => {
-  //   let filtered = this.state.filtered;
-  //   let insertNewFilter = 1;
+ 
 
-  //   if (filtered.length) {
-  //     filtered.forEach((filter, i) => {
-  //       if (filter["_id"] === accessor) {
-  //         if (value === "" || !value.length) filtered.splice(i, 1);
-  //         else filter["value"] = value;
-
-  //         insertNewFilter = 0;
-  //       }
-  //     });
-  //   }
-
-  //   if (insertNewFilter) {
-  //     filtered.push({ id: accessor, value: value });
-  //   }
-
-  //   this.setState({ filtered: filtered });
-  // };
+  
   componentDidMount() {
     axios
       .get("http://localhost:5000/api/user/")
@@ -68,29 +49,7 @@ export default class TestTable extends React.Component {
 
 
 
-  deleteProfile(id){
-    console.log('Delte propfile', id)
-    axios.delete(`http://localhost:5000/api/user/${id}`)
-        .then((res) => {
-          axios
-      .get("http://localhost:5000/api/user/")
-      .then((res) => {
-        console.log('Data',res.data);
-        this.setState({
-          profiles: res.data,
-          loading: false,
-        });
-      })
-            console.log('Profile successfully deleted!')
-        }).catch((error) => {
-            console.log(error)
-            alert(error)
-        })
-  }
-
-  editProfile(id){
-    
-  }
+ 
 
 
 
@@ -161,40 +120,10 @@ export default class TestTable extends React.Component {
         );
       },
     },
+
     {
-      Header: () => <h5> Phone </h5>,
+      Header: <h5> Phone Number </h5>,
       accessor: "workphonenumber",
-      Cell: (row) => (
-        <div style={{ textAlign: "left", fontSize: "13px" }}>{row.value}</div>
-      ),
-      width: 120,
-      sortable: false,
-      filterable: true,
-      filterMethod: (filter, row) => {
-        console.log("filter: ", filter.workphonenumber)
-        //   console.log('row: ', row.email.toLowerCase())
-        const rowItem = row.workphonenumber 
-        if (rowItem && rowItem.includes(filter.value)) {
-          return true;
-        }
-        return false;
-      },
-
-      Filter: ({ filter, onChange }) => {
-        return (
-          <input
-            style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
-            onChange={(event) => onChange(event.target.value)}
-            value={filter ? filter.value : ""}
-          />
-        );
-      },
-    },
-
-    {
-      Header: <h5> Work Permit </h5>,
-      accessor: "workpermit",
       Cell: (row) => <div>{row.value}</div>,
       width: 200,
       sortable: false,
@@ -219,66 +148,40 @@ export default class TestTable extends React.Component {
         );
       },
     },
-    {
-      Header: <h5> Location </h5>,
-      accessor: "city",
-      Cell: (row) => <div>{row.value}</div>,
-      width: 200,
-      sortable: false,
-      filterable: true,
-      filterMethod: (filter, row) => {
-        console.log("filter: ", filter.value.toLowerCase());
-        // console.log('row: ', row)
-        const rowItem = row.city ? row.city.toLowerCase() : null;
-        if (rowItem && rowItem.includes(filter.value.toLowerCase())) {
-          return true;
-        }
-        return false;
-      },
-      Filter: ({ filter, onChange }) => {
-        return (
-          <input
-            style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
-            onChange={(event) => onChange(event.target.value)}
-            value={filter ? filter.value : ""}
-          />
-        );
-      },
-    },
-    {
-      Header: <h5> Resume </h5>,
-      accessor: "profileImg",
-      Cell: (row) => <div> <a href= {row.value}>Download Profile</a> </div>,
-      width: 200,
-      sortable: false,
-      filterable: true,
-      filterMethod: (filter, row) => {
-        console.log("filter: ", filter.value);
-        // console.log('row: ', row)
-        const rowItem = row.profileImg ? row.profileImg : null;
-        if (rowItem && rowItem.includes(filter.value)) {
-          return true;
-        }
-        return false;
-      },
-      Filter: ({ filter, onChange }) => {
-        return (
-          <input
-            style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
-            onChange={(event) => onChange(event.target.value)}
-            value={filter ? filter.value : ""}
-          />
-        );
-      },
-    },
-    {
-      Header: <h4> </h4>,
-      accessor: "_id",
-      Cell: (row) =>  <Delete id = {row.value} deleteProfile={this.deleteProfile}/>,
-      sortable: false,
-    },
+    // {
+    //   Header: <h5> Skills </h5>,
+    //   accessor: "skills",
+    //   Cell: (row) => <div>{row.value}</div>,
+    //   width: 200,
+    //   sortable: false,
+    //   filterable: true,
+    //   filterMethod: (filter, row) => {
+    //     console.log("filter: ", filter.value.toLowerCase());
+    //     // console.log('row: ', row)
+    //     const rowItem = row.city ? row.city.toLowerCase() : null;
+    //     if (rowItem && rowItem.includes(filter.value.toLowerCase())) {
+    //       return true;
+    //     }
+    //     return false;
+    //   },
+    //   Filter: ({ filter, onChange }) => {
+    //     return (
+    //       <input
+    //         style={{ width: "200px", alignSelf: "left" }}
+    //         placeholder="Search"
+    //         onChange={(event) => onChange(event.target.value)}
+    //         value={filter ? filter.value : ""}
+    //       />
+    //     );
+    //   },
+    // },
+   
+    // {
+    //   Header: <h4> </h4>,
+    //   accessor: "_id",
+    //   Cell: (row) =>  <Delete id = {row.value} deleteProfile={this.deleteProfile}/>,
+    //   sortable: false,
+    // },
     
   ];
 

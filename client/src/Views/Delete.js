@@ -11,9 +11,11 @@ export default function Delete(props) {
     return(
     <>
     <div style={{ flexDirection: "row" }}>
+       <Link to = {`/view/${props.id}`}>
     <button style = {{color: 'green'}} >
       <i class="fas fa-eye"></i>
-    </button>{" "}
+    </button>
+    </Link> 
 
     <Link to={`/editProfile/${props.id}`}>
     <button style = {{color: 'blue'}}>

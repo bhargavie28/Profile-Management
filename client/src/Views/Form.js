@@ -1,31 +1,29 @@
 import React, { Component, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
-import DatePicker from 'react-datepicker';
+import DatePicker from "react-datepicker";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import Spinner from './Spinner';
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import {NavLink, Redirect} from 'react-router-dom';
-import SimpleReactValidator from 'simple-react-validator';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Spinner from "./Spinner";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import { NavLink, Redirect } from "react-router-dom";
+import SimpleReactValidator from "simple-react-validator";
+import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "../App.css";
 import { Divider } from "@material-ui/core";
 import ProfileList from "./ProfileList";
-import SelectUSState from 'react-select-us-states';
-import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-
-
-
-
-
+import SelectUSState from "react-select-us-states";
+import moment from "moment";
+import "react-datepicker/dist/react-datepicker.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import { Button } from "react-bootstrap";
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 
 
 class Form1 extends Component {
@@ -34,7 +32,7 @@ class Form1 extends Component {
     this.validator = new SimpleReactValidator();
 
     this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeDOB= this.onChangeDOB.bind(this);
+    this.onChangeDOB = this.onChangeDOB.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeWorkPhoneNumber = this.onChangeWorkPhoneNumber.bind(this);
     this.onChangeHomePhoneNumber = this.onChangeHomePhoneNumber.bind(this);
@@ -57,9 +55,8 @@ class Form1 extends Component {
     this.onFileChange = this.onFileChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
-
-
+    this.handleChangeInput = this.handleChangeInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       name: "",
       email: "",
@@ -67,12 +64,12 @@ class Form1 extends Component {
       homephonenumber: "",
       workpermit: "",
       preferredlocation: "",
-      state: '',
-      city: '',
-      address:'',
+      state: "",
+      city: "",
+      address: "",
       role: "",
       primaryskills: [],
-      rating:'',
+      rating: "",
       employer: "",
       linkedinurl: "",
       skypeid: "",
@@ -82,18 +79,19 @@ class Form1 extends Component {
       gender: "",
       source: "",
       profileImg: "",
-      dob: '',
+      dob: "",
       isLoading: false,
       success: false,
-      error: false
+      error: false,
+      tags: [],
+      tag: ''
     };
   }
 
-  
   onChangeName(e) {
     this.setState({ name: e.target.value });
   }
- 
+
   onChangeEmail(e) {
     this.setState({ email: e.target.value });
   }
@@ -106,7 +104,7 @@ class Form1 extends Component {
   onChangeWorkPermit(e) {
     this.setState({ workpermit: e.target.value });
   }
- 
+
   onChangePreferredLocation(e) {
     this.setState({ preferredlocation: e.target.value });
   }
@@ -121,7 +119,6 @@ class Form1 extends Component {
     this.setState({ primaryskills: e.target.value });
   }
   onChangeRating(e) {
-   
     this.setState({ rating: e.target.value });
   }
   onChangeEmployer(e) {
@@ -135,8 +132,8 @@ class Form1 extends Component {
   }
   onChangeStatus(e) {
     this.setState({ status: e.target.value });
-    this.setState(Date.now)
-    console.log(Date.now)
+    this.setState(Date.now);
+    console.log(Date.now);
   }
   onChangeRelocation(e) {
     e.preventDefault();
@@ -154,111 +151,118 @@ class Form1 extends Component {
     this.setState({ source: e.target.value });
   }
   onFileChange(e) {
-    this.setState({ resume:  e.target.files[0],
-    });
+    this.setState({ resume: e.target.files[0] });
   }
   // onChangeState(e) {
   //   this.setState({ state: e.target.value });
   // }
 
   onChangeState(newValue) {
-    console.log('this is the State code:' + newValue);
+    console.log("this is the State code:" + newValue);
   }
   onChangeCity(e) {
     this.setState({ city: e.target.value });
   }
   onFileChange(e) {
-    this.setState({ profileImg: e.target.files[0] })
-}
-onChangeDOB(e) {
-  this.setState({dob: e.target.value})
-}
-onNameChange(e) {
-    this.setState({ name: e.target.value })
-}
+    this.setState({ profileImg: e.target.files[0] });
+  }
+  onChangeDOB(e) {
+    this.setState({ dob: e.target.value });
+  }
+  onNameChange(e) {
+    this.setState({ name: e.target.value });
+  }
 
-onClickHandler(e) {
+  onClickHandler(e) {
+    alert("File Uploaded");
+  }
+  handleChange(tags) {
+    
+    this.setState({ tags });
+    console.log('Tags', tags)
+  }
 
-alert('File Uploaded')
-}
-  
-  
+  handleChangeInput(tag) {
+    this.setState({ tag });
+    console.log('Tag', tag)
+  }
+
   onSubmit(e) {
     e.preventDefault();
-    const data = new FormData() 
-    data.append('profileImg', this.state.profileImg)
-    data.append('name', this.state.name)
-    data.append('email', this.state.email)
-    data.append('workphonenumber', this.state.workphonenumber)
-    data.append('homephonenumber', this.state.homephonenumber)
-    data.append('workpermit', this.state.workpermit)
-    data.append('preferredlocation', this.state.preferredlocation)
-    data.append('state', this.state.state)
-    data.append('city', this.state.city)
-    data.append('address', this.state.address)
-    data.append('role', this.state.role)
-    data.append('primaryskills', this.state.primaryskills)
-    data.append('rating', this.state.rating)
-    data.append('employer', this.state.employer)
-    data.append('linkedinurl', this.state.linkedinurl)
-    data.append('skypeid', this.state.skypeid)
-    data.append('status', this.state.status)
-    data.append('relocation', this.state.relocation)
-    data.append('taxterms', this.state.taxterms)
-    data.append('gender', this.state.gender)
-    data.append('source', this.state.source)
-    data.append('dob', this.state.dob)
+    const data = new FormData();
+    data.append("profileImg", this.state.profileImg);
+    data.append("name", this.state.name);
+    data.append("email", this.state.email);
+    data.append("workphonenumber", this.state.workphonenumber);
+    data.append("homephonenumber", this.state.homephonenumber);
+    data.append("workpermit", this.state.workpermit);
+    data.append("preferredlocation", this.state.preferredlocation);
+    data.append("state", this.state.state);
+    data.append("city", this.state.city);
+    data.append("address", this.state.address);
+    data.append("role", this.state.role);
+    data.append("primaryskills", this.state.primaryskills);
+    data.append("rating", this.state.rating);
+    data.append("employer", this.state.employer);
+    data.append("linkedinurl", this.state.linkedinurl);
+    data.append("skypeid", this.state.skypeid);
+    data.append("status", this.state.status);
+    data.append("relocation", this.state.relocation);
+    data.append("taxterms", this.state.taxterms);
+    data.append("gender", this.state.gender);
+    data.append("source", this.state.source);
+    data.append("dob", this.state.dob);
+    data.append("tags", this.state.tags);
+    data.append("tag", this.state.tag);
     axios
       .post(`http://localhost:5000/api/user`, data)
       .then(this.onSuccess())
-      .catch(error => {console.log(error)})
+      .catch((error) => {
+        console.log(error);
+      });
   }
-onSuccess(){
-  console.log('INSUCCEss')
-  this.props.history.push('/success')
-}
-onFailure(){
-  console.log('INSUCCEss')
-  this.props.history.push('/error')
-}
-
-
- 
+  onSuccess() {
+    console.log("INSUCCEss");
+    this.props.history.push("/success");
+  }
+  onFailure() {
+    console.log("INSUCCEss");
+    this.props.history.push("/error");
+  }
 
   render() {
-    return (
-      this.state.isLoading ?( <Spinner />) : 
-      
-     ( <Container>
-        <Fragment  className= "back">
-        <NavLink to = "/table"><KeyboardBackspaceIcon /></NavLink>
+    return this.state.isLoading ? (
+      <Spinner />
+    ) : (
+      <Container>
+        <Fragment className="back">
+          <NavLink to="/table">
+            <KeyboardBackspaceIcon />
+          </NavLink>
           <h3 className="color">Personal Details</h3>
           <Divider />
-        
         </Fragment>
 
         <Container className="container">
           <div class="form-group form-group-sm">
             <div class="row">
               <div className="col-sm-12">
-                <Form onSubmit= {this.onSubmit}>
+                <Form>
                   <div class="row">
                     <div className="col-sm-6">
                       <Form.Group controlId="firstname">
                         <Form.Label>Applicant Name</Form.Label>
-                        
+
                         <Form.Control
                           placeholder="Full Name As Per Passport"
                           type="text"
                           value={this.state.name}
                           onChange={this.onChangeName}
                           className="form-control form-control-sm"
-                            required                         
+                          required
                         />
-
                       </Form.Group>
-                    
-                  
+
                       <Form.Group controlId="worknumber" className="textField">
                         <Form.Label>Work Phone number</Form.Label>
                         <Form.Control
@@ -288,7 +292,7 @@ onFailure(){
                           required
                         />
                       </Form.Group>
-             
+
                       <Form.Group controlId="formGridWorkPermit">
                         <Form.Label>Work Permit</Form.Label>
                         <Form.Control
@@ -296,8 +300,8 @@ onFailure(){
                           className="form-control form-control-sm"
                           value={this.state.workpermit}
                           onChange={this.onChangeWorkPermit}
-                          required>
-
+                          required
+                        >
                           <option>Select</option>
                           <option>H1-B</option>
                           <option>B1</option>
@@ -309,34 +313,29 @@ onFailure(){
                           <option>L2-EAD</option>
                           <option>OPT-EAD</option>
                           <option>TN Visa</option>
-
                         </Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridCurrentLocation">
                         <Form.Label>Current Location</Form.Label>
-                     
-                      <Form.Group controlId="formGridState">
-                        <Form.Label>State</Form.Label>
-                        <SelectUSState
-                         
-                          className="form-control form-control-sm"
-                          onChange= {this.onChangeState}
-                          required
-                        />
-                        
+
+                        <Form.Group controlId="formGridState">
+                          <Form.Label>State</Form.Label>
+                          <SelectUSState
+                            className="form-control form-control-sm"
+                            onChange={this.onChangeState}
+                            required
+                          />
                         </Form.Group>
                         <Form.Group controlId="formGridCity">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control
-                          type = "text"
-                          className="form-control form-control-sm"
-                          vlaue = {this.state.city}
-                          onChange= {this.onChangeCity}
-                          required
-                        >
-                          
-                        </Form.Control>
-                      </Form.Group>
+                          <Form.Label>City</Form.Label>
+                          <Form.Control
+                            type="text"
+                            className="form-control form-control-sm"
+                            vlaue={this.state.city}
+                            onChange={this.onChangeCity}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
                       </Form.Group>
                       {/* <Form.Group controlId="formGridState">
                         <Form.Label>Date of Birth</Form.Label>
@@ -346,8 +345,8 @@ onFailure(){
                         <Form.Control
                           as="select"
                           className="form-control form-control-sm"
-                          value= {this.state.preferredlocation}
-                          onChange= {this.onChangePreferredLocation}
+                          value={this.state.preferredlocation}
+                          onChange={this.onChangePreferredLocation}
                           required
                         >
                           <option>Choose...</option>
@@ -356,111 +355,95 @@ onFailure(){
                       </Form.Group>
                       <Form.Group controlId="formGriddob">
                         <Form.Label>Date of Birth</Form.Label>
-                        <Form.Control 
-                        className="form-control form-control-sm"
-                        value= {this.state.dob}
-                        onChange= {this.onChangeDOB}
+                        <Form.Control
+                          className="form-control form-control-sm"
+                          placeholder="DD/MM/YYYY"
+                          value={this.state.dob}
+                          onChange={this.onChangeDOB}
                         ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridAddress">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control 
-                        className="form-control form-control-sm"
-                        value= {this.state.address}
-                        onChange= {this.onChangeAddress}
+                        <Form.Control
+                          className="form-control form-control-sm"
+                          value={this.state.address}
+                          onChange={this.onChangeAddress}
                         ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridRole">
                         <Form.Label>Role</Form.Label>
-                        <Form.Control 
-                         as="select"
-                        className="form-control form-control-sm"
-                        value = {this.state.role}
-                        onChange= {this.onChangeRole}
-                        required
+                        <Form.Control
+                          as="select"
+                          className="form-control form-control-sm"
+                          value={this.state.role}
+                          onChange={this.onChangeRole}
+                          required
                         >
-                           <option>Select</option>
+                          <option>Select</option>
                           <option>Software Developer</option>
                           <option>Quality Analyst</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId="formGridPrimarySkills">
-                        <Form.Label>SkillSet</Form.Label>
-                       
-                        <Form.Row>
-                          <Col>
-                          <Form.Label>Primary Skills</Form.Label>
-                           <Form.Control 
-                           className="form-control form-control-sm"
-                           value= {this.state.primaryskills}
-                           onChange= {this.onChangePrimarySkills}
-                           required
-                           ></Form.Control>
-                          </Col>
-                          <Col>
-                          <Form.Label>Rating</Form.Label>
-                          <Form.Control 
-                           className="form-control form-control-sm"
-                           controlId="formGridRating"
-                           value= {this.state.rating}
-                           onChange= {this.onChangeRating}
-                           placeholder= "on a scale of 5"
-                           required
-                           ></Form.Control>
-                          </Col>
-                        </Form.Row>
-                      </Form.Group>
-                      <Form.Group controlId="formGridEmployer">
-                        <Form.Label>Employer</Form.Label>
-                        <Form.Control className="form-control form-control-sm"
-                        value= {this.state.employer}
-                        onChange= {this.onChangeEmployer}
-                        ></Form.Control>
-                      </Form.Group>
-                     
                     </div>
                     <div className="col-sm-6">
-                   
+                      <Form.Group controlId="formGridEmployer">
+                        <Form.Label>Employer</Form.Label>
+                        <Form.Control
+                          className="form-control form-control-sm"
+                          value={this.state.employer}
+                          onChange={this.onChangeEmployer}
+                        ></Form.Control>
+                      </Form.Group>
                       <Form.Group controlId="formGridLinkedIn">
                         <Form.Label>LinkedIn Profile URL</Form.Label>
-                        <Form.Control 
-                        
-                        className="form-control form-control-sm"
-                        value= {this.state.linkedinurl}
-                        onChange= {this.onChangeLinkedInUrl}
+                        <Form.Control
+                          className="form-control form-control-sm"
+                          value={this.state.linkedinurl}
+                          onChange={this.onChangeLinkedInUrl}
                         ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridSkypeId">
                         <Form.Label>Skype ID</Form.Label>
-                        <Form.Control className="form-control form-control-sm"
-                          value= {this.state.skypeid}
-                          onChange= {this.onChangeSkypeID}
+                        <Form.Control
+                          className="form-control form-control-sm"
+                          value={this.state.skypeid}
+                          onChange={this.onChangeSkypeID}
                         ></Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridStatus">
                         <Form.Label>Current Applicant Status </Form.Label>
-                        <Form.Control 
-                        as= "select"
-                        className="form-control form-control-sm"
-                        value= {this.state.status}
-                        onChange= {this.onChangeStatus}
-                        required
+                        <Form.Control
+                          as="select"
+                          className="form-control form-control-sm"
+                          value={this.state.status}
+                          onChange={this.onChangeStatus}
+                          required
                         >
-                           <option>Select</option>
+                          <option>Select</option>
                           <option>Available</option>
                           <option>In Project</option>
                         </Form.Control>
                       </Form.Group>
                       <Form.Group controlId="formGridRelocation">
                         <Form.Label>Relocation</Form.Label>
-                       
+
                         <Form.Row>
                           <Col>
-                            <Form.Check type="radio" value ="Yes" checked={this.state.relocation === "Yes"} onChange= {this.onChangeRelocation}  />
+                            <Form.Check
+                              type="radio"
+                              value="Yes"
+                              checked={this.state.relocation === "Yes"}
+                              onChange={this.onChangeRelocation}
+                            />
                             Yes
                           </Col>
                           <Col>
-                            <Form.Check type="radio" value ="No" checked={this.state.relocation === "No"} onChange= {this.onChangeRelocation} />
+                            <Form.Check
+                              type="radio"
+                              value="No"
+                              checked={this.state.relocation === "No"}
+                              onChange={this.onChangeRelocation}
+                            />
                             No
                           </Col>
                         </Form.Row>
@@ -468,14 +451,14 @@ onFailure(){
                       <Form.Group controlId="formGridTaxTerms">
                         <Form.Label>Tax terms </Form.Label>
                         <Form.Control
-                         as = "select"
-                        className="form-control form-control-sm"
-                        value= {this.state.taxterms}
-                        onChange = {this.onChangeTaxterms}
-                        required
+                          as="select"
+                          className="form-control form-control-sm"
+                          value={this.state.taxterms}
+                          onChange={this.onChangeTaxterms}
+                          required
                         >
                           <option>Select</option>
-                           <option>1099</option>
+                          <option>1099</option>
                           <option>C2C</option>
                           <option>C2H</option>
                           <option>Full Time</option>
@@ -490,25 +473,35 @@ onFailure(){
                         <Form.Label>Gender </Form.Label>
                         <Form.Row>
                           <Col>
-                            <Form.Check type="radio" value ="Female" checked={this.state.gender === "Female"}    onChange= {this.onChangeGender}/>
+                            <Form.Check
+                              type="radio"
+                              value="Female"
+                              checked={this.state.gender === "Female"}
+                              onChange={this.onChangeGender}
+                            />
                             Female
                           </Col>
                           <Col>
-                            <Form.Check type="radio" value ="Male" checked={this.state.gender === "Male"}  onChange= {this.onChangeGender}/>
+                            <Form.Check
+                              type="radio"
+                              value="Male"
+                              checked={this.state.gender === "Male"}
+                              onChange={this.onChangeGender}
+                            />
                             Male
                           </Col>
                         </Form.Row>
                       </Form.Group>
                       <Form.Group controlId="formGridSource">
                         <Form.Label>Source </Form.Label>
-                        <Form.Control 
-                        as = "select"
-                        className="form-control form-control-sm"
-                        value= {this.state.source}
-                        onChange = {this.onChangeSource}
-                        required
+                        <Form.Control
+                          as="select"
+                          className="form-control form-control-sm"
+                          value={this.state.source}
+                          onChange={this.onChangeSource}
+                          required
                         >
-                           <option>Select</option>
+                          <option>Select</option>
                           <option>Dice</option>
                           <option>Monster</option>
                           <option>Career Builder</option>
@@ -516,52 +509,82 @@ onFailure(){
                           <option>Indeed</option>
                           <option>Referral</option>
                           <option>Other</option>
-
                         </Form.Control>
                       </Form.Group>
-                      <Form.Label>Documents</Form.Label>
-                      <Form.Group> 
-                       
+                      <Form.Group controlId="formGridPrimarySkills">
+                        <Form.Label>
+                          <h6>SkillSet</h6>
+                        </Form.Label>
+
+                        <Form.Row>
+                          <TagsInput
+                            value={this.state.tags}
+                            onChange={this.handleChange}
+                            inputValue={this.state.tag}
+                            onChangeInput={this.handleChangeInput}
+                          />
+                          <Col>
+                            {/* <Form.Label>Rating</Form.Label>
+                          <Form.Control 
+                           className="form-control form-control-sm"
+                           controlId="formGridRating"
+                           value= {this.state.rating}
+                           onChange= {this.onChangeRating}
+                           placeholder= "on a scale of 5"
+                           required
+                           ></Form.Control> */}
+                          </Col>
+                        </Form.Row>
+                      </Form.Group>
+                      <Form.Label>
+                        <h6>Documents</h6>
+                      </Form.Label>
+                      <Form.Group>
                         <Form.Label>Resume</Form.Label>
-                      <div className="form-group" required>
-                            <input type="file" onChange={this.onFileChange} />
+                        <div className="form-group" required>
+                          <input type="file" onChange={this.onFileChange} />
                         </div>
 
-                         <Form.Label>Education</Form.Label>    
+                        {/* <Form.Label>Education</Form.Label>    
                         <div className="form-group">
                             <input type="file" onChange={this.onFileChange} />
                         </div>
                         <Form.Label>Visa</Form.Label>    
                         <div className="form-group">
                             <input type="file" onChange={this.onFileChange} />
-                        </div>
-                          
-                        </Form.Group>           
-                          </div>
+                        </div> */}
+                      </Form.Group>
+                    </div>
                   </div>
-                  <div className="form-group">
-                            <button className="btn btn-primary" type="submit" onSubmit={this.onSubmit}>Submit</button>
+                  {/* <div className="form-group" style= {{justifyContent: "center"}}>
+                            <button className="btn btn-primary" type="submit" alignSelf="center" onSubmit={this.onSubmit}>Submit</button>
                         </div>
-  
-                  
+   */}
                 </Form>
                 <div>
-                 
-                {/* <div className="form-group">
-                            <button className="btn btn-primary" type="submit">Submit</button>
+                  {/* <div className="form-group">
+                            <button className="btn btn-primary" type="submit" >Submit</button>
                         </div> */}
                   {/* <div>
                     <Button className="btn-primary" type="submit" id="Reset">
                       Reset
                     </Button>
                   </div> */}
+                  <Button
+                    variant="success"
+                    size="lg"
+                    block="block"
+                    type="submit"
+                    onClick={this.onSubmit}
+                  >
+                    Submit
+                  </Button>
                 </div>
               </div>
             </div>
           </div>
         </Container>
-      </Container>)
-      
+      </Container>
     );
   }
 }

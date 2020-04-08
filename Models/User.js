@@ -73,6 +73,12 @@ const UserSchema = new mongoose.Schema({
   },
   text : {
     type: String
+  },
+  tags: {
+    type: [String]
+  },
+  tag: {
+    type: String
   }
 });
 

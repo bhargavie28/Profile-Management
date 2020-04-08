@@ -12,6 +12,8 @@ app.get('/', (req, res) => res.send('API running'));
 app.use(express.json({ extended: false }));
 app.use('/api/user', require('./Routes/Api/users'));
 app.use('/api/upload', require('./Routes/Api/upload'));
+app.use('/api/resume', require('./Routes/Api/resume'));
+
 app.use('/public', express.static('public'));
 
 
