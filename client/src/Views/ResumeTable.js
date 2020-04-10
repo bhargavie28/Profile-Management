@@ -47,7 +47,25 @@ export default class ResumeTable extends React.Component {
     });
   }
 
-
+  deleteProfile(id){
+    console.log('Delte propfile', id)
+    axios.delete(`http://localhost:5000/api/user/${id}`)
+        .then((res) => {
+          axios
+      .get("http://localhost:5000/api/user/")
+      .then((res) => {
+        console.log('Data',res.data);
+        this.setState({
+          profiles: res.data,
+          loading: false,
+        });
+      })
+            console.log('Profile successfully deleted!')
+        }).catch((error) => {
+            console.log(error)
+            alert(error)
+        })
+  }
 
  
 
@@ -148,6 +166,13 @@ export default class ResumeTable extends React.Component {
         );
       },
     },
+    {
+      Header: <h4> </h4>,
+      accessor: "_id",
+      Cell: (row) =>  <Delete id = {row.value} deleteProfile={this.deleteProfile}/>,
+      sortable: false,
+    },
+   
     // {
     //   Header: <h5> Skills </h5>,
     //   accessor: "skills",

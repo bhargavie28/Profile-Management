@@ -89,7 +89,7 @@ export default class TestTable extends React.Component {
   }
 
   editProfile(id){
-    
+    this.props.history.push(`/view/${id}`)
   }
 
 
@@ -279,6 +279,7 @@ export default class TestTable extends React.Component {
       Cell: (row) =>  <Delete id = {row.value} deleteProfile={this.deleteProfile}/>,
       sortable: false,
     },
+   
     
   ];
 

@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 export default function Delete(props) {
 
  
-     console.log('Delte props', props)
+   //  console.log('Delte props', props)
     return(
     <>
     <div style={{ flexDirection: "row" }}>

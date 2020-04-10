@@ -120,9 +120,14 @@ justify-content: right;
 .container {
  font-size: small;
  text-align: left;
-margin-bottom: 10;
+ margin-bottom: 10;
  height: 10;
 }
+.view {
+ 
+  font-weight: bold;
+  margin-top: 10;
+ }
 
 .profile {
   background-color: #ecf0f3;

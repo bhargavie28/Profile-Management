@@ -22,9 +22,14 @@ import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { Button } from "react-bootstrap";
-import TagsInput from 'react-tagsinput'
-import 'react-tagsinput/react-tagsinput.css'
-
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
+import PlacesAutocomplete from 'react-places-autocomplete';
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from 'react-places-autocomplete';
 
 class Form1 extends Component {
   constructor(props) {
@@ -57,6 +62,11 @@ class Form1 extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeadd = this.handleChangeadd.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+
+
+
     this.state = {
       name: "",
       email: "",
@@ -84,9 +94,22 @@ class Form1 extends Component {
       success: false,
       error: false,
       tags: [],
-      tag: ''
+      tag: "",
+      country: "",
+      region: ""
     };
   }
+
+  handleChangeadd = address => {
+    this.setState({ address });
+  };
+
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
 
   onChangeName(e) {
     this.setState({ name: e.target.value });
@@ -177,14 +200,13 @@ class Form1 extends Component {
     alert("File Uploaded");
   }
   handleChange(tags) {
-    
     this.setState({ tags });
-    console.log('Tags', tags)
+    console.log("Tags", tags);
   }
 
   handleChangeInput(tag) {
     this.setState({ tag });
-    console.log('Tag', tag)
+    console.log("Tag", tag);
   }
 
   onSubmit(e) {
@@ -217,7 +239,7 @@ class Form1 extends Component {
     axios
       .post(`http://localhost:5000/api/user`, data)
       .then(this.onSuccess())
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
@@ -231,6 +253,8 @@ class Form1 extends Component {
   }
 
   render() {
+    const { country, region } = this.state;
+
     return this.state.isLoading ? (
       <Spinner />
     ) : (
@@ -317,25 +341,45 @@ class Form1 extends Component {
                       </Form.Group>
                       <Form.Group controlId="formGridCurrentLocation">
                         <Form.Label>Current Location</Form.Label>
-
-                        <Form.Group controlId="formGridState">
-                          <Form.Label>State</Form.Label>
-                          <SelectUSState
-                            className="form-control form-control-sm"
-                            onChange={this.onChangeState}
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formGridCity">
-                          <Form.Label>City</Form.Label>
-                          <Form.Control
-                            type="text"
-                            className="form-control form-control-sm"
-                            vlaue={this.state.city}
-                            onChange={this.onChangeCity}
-                            required
-                          ></Form.Control>
-                        </Form.Group>
+                        <PlacesAutocomplete
+        value={this.state.address}
+        onChange={this.handleChangeadd}
+        onSelect={this.handleSelect}
+        //  googleCallbackName="initMap"
+      >
+        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+          <div>
+            <input
+              {...getInputProps({
+                placeholder: 'Search Places ...',
+                className: 'location-search-input',
+              })}
+            />
+            <div className="autocomplete-dropdown-container">
+              {loading && <div>Loading...</div>}
+              {suggestions.map(suggestion => {
+                const className = suggestion.active
+                  ? 'suggestion-item--active'
+                  : 'suggestion-item';
+                // inline style for demonstration purpose
+                const style = suggestion.active
+                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                return (
+                  <div
+                    {...getSuggestionItemProps(suggestion, {
+                      className,
+                      style,
+                    })}
+                  >
+                    <span>{suggestion.description}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </PlacesAutocomplete>
                       </Form.Group>
                       {/* <Form.Group controlId="formGridState">
                         <Form.Label>Date of Birth</Form.Label>
@@ -448,6 +492,7 @@ class Form1 extends Component {
                           </Col>
                         </Form.Row>
                       </Form.Group>
+
                       <Form.Group controlId="formGridTaxTerms">
                         <Form.Label>Tax terms </Form.Label>
                         <Form.Control
