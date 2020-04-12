@@ -4,7 +4,7 @@ import PrimarySearchAppBar from '../../Views/Search';
 
 
 const SignedInLinks =() =>{
-    return(
+    return(<>
         <Nav  className = "mr-auto">
      <Nav.Link href="jobpostlist">JobPosting</Nav.Link>
      <Nav.Link href="table">Profiles</Nav.Link>
@@ -14,11 +14,12 @@ const SignedInLinks =() =>{
      <Nav.Link href="uploadfile">BulkUpload</Nav.Link>
      <Nav.Link href="uploadResume">Xtractor</Nav.Link>
      <Nav.Link href="ResumeTable">Resumes</Nav.Link>
-
-
-
-
     </Nav>
+    {/* <Form inline>
+    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+    <Button variant="outline-success">Search</Button>
+  </Form> */}
+</>
     )
 }
 

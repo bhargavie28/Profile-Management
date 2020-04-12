@@ -99,7 +99,8 @@ export default class View extends Component {
               <div className="col-sm-12">
                   <div class="row">
                     <div className="col-sm-6">
-                      <div>Name : </div>
+                      <div className = "view">
+                      <div >Name : </div>
                       <div>Email : </div>
                       <div>Work Phone Number : </div>
                       <div>Home Phone Number : </div>
@@ -110,7 +111,9 @@ export default class View extends Component {
                       <div>Address : </div>
                       <div>Role : </div>
                     </div>
+                    </div>
                     <div className="col-sm-6">
+                      <div className = "view">
                     <div>Skills : </div>
                     <div>Employer : </div>
                     <div>Linked In Profile Url : </div>
@@ -121,6 +124,7 @@ export default class View extends Component {
                     <div>Gender : </div>
                     <div>Source : </div>
                     <div>Resume : </div>
+                    </div>
                     </div>
                   </div>
               </div>

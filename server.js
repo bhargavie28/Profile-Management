@@ -10,6 +10,8 @@ connectDB();
 app.use(cors())
 app.get('/', (req, res) => res.send('API running'));
 app.use(express.json({ extended: false }));
+app.use('/api/login', require('./routes/api/login'));
+app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/user', require('./Routes/Api/users'));
 app.use('/api/upload', require('./Routes/Api/upload'));
 app.use('/api/resume', require('./Routes/Api/resume'));

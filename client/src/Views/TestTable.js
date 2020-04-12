@@ -7,10 +7,6 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 import Delete from './Delete';
-import Select from "react-select";
-import Spinner from "./Spinner";
-
-
 
 export default class TestTable extends React.Component {
   constructor(props) {
@@ -20,32 +16,8 @@ export default class TestTable extends React.Component {
     this.state = {
       profiles: [],
       loading: true,
-      select2: undefined,
-      filtered: [],
-
     };
   }
-  // onFilteredChangeCustom = (value, accessor) => {
-  //   let filtered = this.state.filtered;
-  //   let insertNewFilter = 1;
-
-  //   if (filtered.length) {
-  //     filtered.forEach((filter, i) => {
-  //       if (filter["_id"] === accessor) {
-  //         if (value === "" || !value.length) filtered.splice(i, 1);
-  //         else filter["value"] = value;
-
-  //         insertNewFilter = 0;
-  //       }
-  //     });
-  //   }
-
-  //   if (insertNewFilter) {
-  //     filtered.push({ id: accessor, value: value });
-  //   }
-
-  //   this.setState({ filtered: filtered });
-  // };
   componentDidMount() {
     axios
       .get("http://localhost:5000/api/user/")
@@ -89,7 +61,7 @@ export default class TestTable extends React.Component {
   }
 
   editProfile(id){
-    this.props.history.push(`/view/${id}`)
+    
   }
 
 
@@ -102,10 +74,10 @@ export default class TestTable extends React.Component {
     //   sortable: false
     // },
     {
-      Header: <h5 style={{ textAlign: "left", width: "100px" }}> Applicant Name </h5>,
+      Header: <h5 style={{ textAlign: "left", width: "100px" }}> Name </h5>,
       accessor: "name",
       Cell: (row) => (
-        <div style={{ textAlign: "left", fontSize: "13px" }}><h7>{row.value.toUpperCase()}</h7></div>
+        <div style={{ textAlign: "left", fontSize: "13px" }}>{row.value}</div>
       ),
       sortable: false,
       filterable: true,
@@ -123,7 +95,7 @@ export default class TestTable extends React.Component {
           <div style={{ alignSelf: "left" }}>
             <input
               style={{ width: "200px" }}
-              placeholder="Search"
+              placeholder="Search Checklist Item"
               onChange={(event) => onChange(event.target.value)}
               value={filter ? filter.value : ""}
             />
@@ -154,37 +126,7 @@ export default class TestTable extends React.Component {
         return (
           <input
             style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
-            onChange={(event) => onChange(event.target.value)}
-            value={filter ? filter.value : ""}
-          />
-        );
-      },
-    },
-    {
-      Header: () => <h5> Phone </h5>,
-      accessor: "workphonenumber",
-      Cell: (row) => (
-        <div style={{ textAlign: "left", fontSize: "13px" }}>{row.value}</div>
-      ),
-      width: 120,
-      sortable: false,
-      filterable: true,
-      filterMethod: (filter, row) => {
-        console.log("filter: ", filter.workphonenumber)
-        //   console.log('row: ', row.email.toLowerCase())
-        const rowItem = row.workphonenumber 
-        if (rowItem && rowItem.includes(filter.value)) {
-          return true;
-        }
-        return false;
-      },
-
-      Filter: ({ filter, onChange }) => {
-        return (
-          <input
-            style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
+            placeholder="Search Checklist Item"
             onChange={(event) => onChange(event.target.value)}
             value={filter ? filter.value : ""}
           />
@@ -193,8 +135,8 @@ export default class TestTable extends React.Component {
     },
 
     {
-      Header: <h5> Work Permit </h5>,
-      accessor: "workpermit",
+      Header: <h5> Role </h5>,
+      accessor: "role",
       Cell: (row) => <div>{row.value}</div>,
       width: 200,
       sortable: false,
@@ -202,7 +144,7 @@ export default class TestTable extends React.Component {
       filterMethod: (filter, row) => {
         console.log("filter: ", filter.value.toLowerCase());
         // console.log('row: ', row)
-        const rowItem = row.workpermit ? row.workpermit.toLowerCase() : null;
+        const rowItem = row.role ? row.role.toLowerCase() : null;
         if (rowItem && rowItem.includes(filter.value.toLowerCase())) {
           return true;
         }
@@ -212,61 +154,7 @@ export default class TestTable extends React.Component {
         return (
           <input
             style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
-            onChange={(event) => onChange(event.target.value)}
-            value={filter ? filter.value : ""}
-          />
-        );
-      },
-    },
-    {
-      Header: <h5> Location </h5>,
-      accessor: "city",
-      Cell: (row) => <div>{row.value}</div>,
-      width: 200,
-      sortable: false,
-      filterable: true,
-      filterMethod: (filter, row) => {
-        console.log("filter: ", filter.value.toLowerCase());
-        // console.log('row: ', row)
-        const rowItem = row.city ? row.city.toLowerCase() : null;
-        if (rowItem && rowItem.includes(filter.value.toLowerCase())) {
-          return true;
-        }
-        return false;
-      },
-      Filter: ({ filter, onChange }) => {
-        return (
-          <input
-            style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
-            onChange={(event) => onChange(event.target.value)}
-            value={filter ? filter.value : ""}
-          />
-        );
-      },
-    },
-    {
-      Header: <h5> Resume </h5>,
-      accessor: "profileImg",
-      Cell: (row) => <div> <a href= {row.value}>Download Profile</a> </div>,
-      width: 200,
-      sortable: false,
-      filterable: true,
-      filterMethod: (filter, row) => {
-        console.log("filter: ", filter.value);
-        // console.log('row: ', row)
-        const rowItem = row.profileImg ? row.profileImg : null;
-        if (rowItem && rowItem.includes(filter.value)) {
-          return true;
-        }
-        return false;
-      },
-      Filter: ({ filter, onChange }) => {
-        return (
-          <input
-            style={{ width: "200px", alignSelf: "left" }}
-            placeholder="Search"
+            placeholder="Search Checklist Item"
             onChange={(event) => onChange(event.target.value)}
             value={filter ? filter.value : ""}
           />
@@ -279,8 +167,6 @@ export default class TestTable extends React.Component {
       Cell: (row) =>  <Delete id = {row.value} deleteProfile={this.deleteProfile}/>,
       sortable: false,
     },
-   
-    
   ];
 
   // onRowClick = (state, rowInfo, column, instance) => {
@@ -318,42 +204,21 @@ export default class TestTable extends React.Component {
   //};
 
   render() {
-    // const customStyles = {
-    //   menu: (provided, state) => ({
-    //     ...provided,
-    //     width: state.selectProps.width,
-    //     borderBottom: '1px dotted pink',
-    //     color: state.selectProps.menuColor,
-    //     padding: 20,
-    //   }),
-    
-    //   control: (_, { selectProps: { width }}) => ({
-    //     width: width
-    //   }),
-    
-    //   singleValue: (provided, state) => {
-    //     const opacity = state.isDisabled ? 0.5 : 1;
-    //     const transition = 'opacity 300ms';
-    
-    //     return { ...provided, opacity, transition };
-    //   }
-    // }
     return (
-      
       <div>
-         {this.state.loading === true ? <Spinner /> :
+        {/* <h1>Test</h1> */}
         <ReactTable
           data={this.state.profiles}
           columns={this.appCheckListColumns}
           defaultPageSize={10}
           //pageSizeOptions={[10, 2, 100]}
-         // getTrProps={this.onRowClick}
+          getTrProps={this.onRowClick}
           sorted={[
             {
               id: "id",
             },
           ]}
-        />}
+        />
       </div>
     );
   }
